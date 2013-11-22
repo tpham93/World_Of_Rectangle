@@ -59,8 +59,8 @@ namespace sat.Shape
             }
         }
 
-        public CircleShape(Texture2D texture, Color color, float radius, float mass, Vector2 position, bool moveable = true)
-            : base(color, radius, position, new Vector2(radius, radius), moveable)
+        public CircleShape(Color color, float radius, float mass, Vector2 position, bool moveable = true)
+            : base(radius, position, new Vector2(radius, radius), moveable)
         {
 
         }

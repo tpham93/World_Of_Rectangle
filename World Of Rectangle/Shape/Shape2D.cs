@@ -22,8 +22,6 @@ namespace sat.Shape
         /*
          * Xna-specific attributes for drawing and handling calculations
          */
-        protected Color color;
-
         protected Vector2 middlePoint;
 
         public abstract EShapeType ShapeType
@@ -65,10 +63,9 @@ namespace sat.Shape
         /// <summary>
         /// Constructor
         /// </summary>
-        protected Shape2D(Color color, float radius, Vector2 position, Vector2 middlePoint, bool moveable)
+        protected Shape2D(float radius, Vector2 position, Vector2 middlePoint, bool moveable)
             : this()
         {
-            this.color = color;
             this.radius = radius;
             this.position = position;
             this.middlePoint = middlePoint;

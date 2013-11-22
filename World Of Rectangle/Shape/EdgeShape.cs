@@ -70,8 +70,8 @@ namespace sat.Shape
             }
         }
 
-        public EdgeShape(Vector2[] corners, Texture2D texture, Color color, Vector2 position, Vector2 centerOfMass, bool moveable = true)
-            : base(color, new Vector2(texture.Width / 2, texture.Height / 2).Length(), position, new Vector2(texture.Width / 2, texture.Height / 2), moveable)
+        public EdgeShape(Vector2[] corners, Vector2 size, Vector2 position, bool moveable = true)
+            : base((size / 2).Length(), position, size, moveable)
         {
             this.corners = new Vector2[corners.Length];
             this.currentCorners = new Vector2[corners.Length];
@@ -80,7 +80,7 @@ namespace sat.Shape
 
             for (int i = 0; i < corners.Length; ++i)
             {
-                this.corners[i] = new Vector2(corners[i].X, corners[i].Y) - centerOfMass;
+                this.corners[i] = new Vector2(corners[i].X, corners[i].Y) - middlePoint;
                 this.currentCorners[i] = this.corners[i] + position;
             }
             for (int i = 1; i <= corners.Length; ++i)
@@ -304,6 +304,20 @@ namespace sat.Shape
             renderTarget.SetData<Color>(pixels);
 
             return renderTarget;
+        }
+
+        public static Vector2[] genCorners(Vector2 rectangleSize)
+        {
+            Vector2[] corners = new Vector2[4];
+
+            rectangleSize *= 0.5f;
+
+            corners[0] = new Vector2(rectangleSize.X * -1, rectangleSize.Y * -1);
+            corners[1] = new Vector2(rectangleSize.X * -1, rectangleSize.Y * 1);
+            corners[2] = new Vector2(rectangleSize.X * 1, rectangleSize.Y * 1);
+            corners[3] = new Vector2(rectangleSize.X * -1, rectangleSize.Y * 1);
+
+            return corners;
         }
 
     }

@@ -9,6 +9,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
+using World_Of_Rectangle.Game;
+using World_Of_Rectangle.Gamestates;
+
 namespace World_Of_Rectangle
 {
     /// <summary>
@@ -19,10 +22,15 @@ namespace World_Of_Rectangle
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        EGameStates gameState;
+        IGamestateElement gameStateElement;
+        IGamestateElement tmpGameStateElement;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
         }
 
         /// <summary>
@@ -34,6 +42,18 @@ namespace World_Of_Rectangle
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+
+            //graphics.IsFullScreen = true;
+            graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
+            graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
+            graphics.ApplyChanges();
+
+            const float baseWidth = 1400;
+            const float baseHeight = 900;
+
+            Global.scaleValues = new Vector3(baseWidth / GraphicsDevice.DisplayMode.Width, baseHeight / GraphicsDevice.DisplayMode.Height, 1.0f);
+
+            //sat.Shape.Shape2D.Initialize(GraphicsDevice);
 
             base.Initialize();
         }
@@ -85,7 +105,60 @@ namespace World_Of_Rectangle
 
             // TODO: Add your drawing code here
 
+
+
             base.Draw(gameTime);
+        }
+
+        internal EGameStates GameState
+        {
+            get { return gameState; }
+            set
+            {
+                // just change if the actual gamestate is being switched
+                if (gameState != value)
+                {
+                    // changes value of gameState and changes type/object of gameStateElement
+                    switch (value)
+                    {
+                        case EGameStates.Menu:
+                            gameStateElement = new Menu();
+                            tmpGameStateElement = null;
+                            gameStateElement.Load(Content);
+                            break;
+                        case EGameStates.Game:
+                            // if gemstate was EGameStates.Inventory then load paused game, otherwise create a new one
+                            if (gameState == EGameStates.Inventory)
+                            {
+                                gameStateElement = tmpGameStateElement;
+                                tmpGameStateElement = null;
+                            }
+                            else
+                            {
+                                gameStateElement = new ActualGame();
+                                gameStateElement.Load(Content);
+                            }
+                            tmpGameStateElement = null;
+                            break;
+                        case EGameStates.Inventory:
+                            if (gameState == EGameStates.Game)
+                            {
+                                tmpGameStateElement = gameStateElement;
+                                gameStateElement = new Inventory(gameStateElement);
+                                gameStateElement.Load(Content);
+                            }
+                            break;
+                        case EGameStates.Close:
+                            Exit();
+                            break;
+                        case EGameStates.Credits:
+                            gameStateElement = new Credits();
+                            gameStateElement.Load(Content);
+                            break;
+                    }
+                    gameState = value;
+                }
+            }
         }
     }
 }
