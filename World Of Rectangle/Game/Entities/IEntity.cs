@@ -7,6 +7,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
+using World_Of_Rectangle.Game.Entities.Weapons;
+
 using sat.Etc;
 using sat.Shape;
 
@@ -93,6 +95,10 @@ namespace World_Of_Rectangle.Game.Entities
             get { return hp; }
             set { hp = value; }
         }
+        public bool stillLiving
+        {
+            get { return hp > 0; }
+        }
         public bool Moveable
         {
             get { return moveable; }
@@ -114,6 +120,16 @@ namespace World_Of_Rectangle.Game.Entities
             this.contactDamage = contactDamage;
             this.hp = hp;
             this.team = team;
+        }
+
+        public virtual void receiveDamageFrom(IEntity entity)
+        {
+            hp -= entity.contactDamage;
+        }
+
+        public virtual void receiveDamageFrom(IWeapon weapon)
+        {
+            hp -= weapon.ContactDamage;
         }
 
         //static Texture2D pixel = Helper.genRectangle(1, 1, Color.Green, Color.Green);

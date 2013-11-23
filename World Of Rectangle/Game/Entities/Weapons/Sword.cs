@@ -15,8 +15,8 @@ namespace World_Of_Rectangle.Game.Entities.Weapons
     class Sword : IWeapon
     {
         TimeSpan attackingTime;
-        readonly TimeSpan MAX_ATTACKINGTIME = TimeSpan.FromSeconds(0.5f);
-        const float MAX_ROTATION = (float)Math.PI/4 * 3;
+        readonly TimeSpan MAX_ATTACKINGTIME = TimeSpan.FromSeconds(0.3f);
+        const float MAX_ROTATION = (float)Math.PI * 9 / 10f;
 
         float ownRotation;
 
@@ -30,7 +30,7 @@ namespace World_Of_Rectangle.Game.Entities.Weapons
         {
             Texture = content.Load<Texture2D>(@"sword");
             Vector2 size = new Vector2(Global.TILE_SIZE * 0.5f, Global.TILE_SIZE * 3);
-            Shape = new EdgeShape(EdgeShape.genCorners(size),size,new Vector2(size.Y*0.25f,size.X * 0.9f),Position,false);
+            Shape = new EdgeShape(EdgeShape.genCorners(size),size,new Vector2(size.Y*0.5f,size.X * 0.9f),Position,false);
         }
 
         public override void attack()
@@ -48,7 +48,7 @@ namespace World_Of_Rectangle.Game.Entities.Weapons
                     attackingTime += gameTime.ElapsedGameTime;
                     ownRotation = MAX_ROTATION * (float)(attackingTime.TotalMilliseconds / MAX_ATTACKINGTIME.TotalMilliseconds);
                     Rotation = ownRotation+ (float)Math.PI/2 + owner.Rotation;
-                    Position = (-sat.Etc.Helper.rotateVector2(owner.Shape.MiddlePoint,owner.Rotation)/2f+ owner.Position );
+                    Position = (-sat.Etc.Helper.rotateVector2(owner.Shape.MiddlePoint,owner.Rotation)+ owner.Position );
                 }
                 else
                 {

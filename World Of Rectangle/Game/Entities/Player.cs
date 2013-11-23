@@ -31,12 +31,23 @@ namespace World_Of_Rectangle.Game.Entities
         protected const float MOVESPEED_PS = 500.0f;
         protected TimeSpan attackCooldown;
         protected int sp;
+        private IWeapon weapon;
 
-        protected IWeapon weapon;
+
+
+        public IWeapon Weapon
+        {
+            get { return weapon; }
+        }
 
         protected bool CanAttack
         {
             get { return attackCooldown < TimeSpan.Zero /*&& weapon != null && weapon.SP_Cost < SP*/; }
+        }
+
+        public bool isAttacking
+        {
+            get { return weapon.Attacking; }
         }
 
         public Player(Vector2 position, float rotation, Keys[] keys)

@@ -124,7 +124,12 @@ namespace World_Of_Rectangle.Game
         private static IEntity colorToEntitiy(Color color, Vector2 position)
         {
             IEntity result = null;
-            if(color == WallColor)
+            if (color.A == 0)
+            {
+                return null;
+            }
+            else
+            if (color == WallColor)
             {
                 Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Wall");
                 result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Wall"));
@@ -176,10 +181,7 @@ namespace World_Of_Rectangle.Game
         public void Update(GameTime gameTime)
         {
             player.Update(gameTime);
-            //if (Input.isKeyDown(Keys.K))
-            //{
 
-            //}
             for (int i = 0; i < enemies.Count; ++i)
             {
                 enemies[i].Update(gameTime);
@@ -188,12 +190,34 @@ namespace World_Of_Rectangle.Game
 
                 if (intersectData.Intersects)
                 {
-                    player.Position += intersectData.Mtv * intersectData.Distance/2;
-                    enemies[i].Position += intersectData.Mtv * intersectData.Distance/2;
-
-                    
+                    enemies[i].Position -= intersectData.Mtv * intersectData.Distance / 2;
+                    player.Position += intersectData.Mtv * intersectData.Distance / 2;
+                    player.receiveDamageFrom(enemies[i]);
+                }
+                if (player.isAttacking)
+                {
+                    intersectData = enemies[i].Shape.intersects(player.Weapon.Shape);
+                    if (intersectData.Intersects)
+                    {
+                        enemies[i].receiveDamageFrom(player.Weapon);
+                    }
                 }
             }
+
+            for (int i = 0; i < enemies.Count; ++i)
+            {
+                for (int j = 0; j < enemies.Count; ++j)
+                {
+                    IntersectData intersectData = enemies[i].Shape.intersects(enemies[j].Shape);
+
+                    if (intersectData.Intersects)
+                    {
+                        enemies[i].Position -= intersectData.Mtv * intersectData.Distance / 2;
+                        enemies[j].Position += intersectData.Mtv * intersectData.Distance / 2;
+                    }
+                }
+            }
+
             for (int i = 0; i < solidEntities.Count; ++i)
             {
                 solidEntities[i].Update(gameTime);
@@ -208,8 +232,6 @@ namespace World_Of_Rectangle.Game
 
 
         }
-
-        int cNR = 0;
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
