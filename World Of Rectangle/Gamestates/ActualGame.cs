@@ -15,7 +15,7 @@ namespace World_Of_Rectangle.Gamestates
         public ActualGame()
         {
 
-            world = new World(@"Maps\map_1.png");
+            world = new World(@"Maps\Castlemap.png");
         }
 
         public void LoadContent(Microsoft.Xna.Framework.Content.ContentManager content)

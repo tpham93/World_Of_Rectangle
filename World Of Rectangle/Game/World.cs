@@ -45,10 +45,17 @@ namespace World_Of_Rectangle.Game
         //solid colours
         readonly static Color WallColor = new Color(0,0,0);
         readonly static Color PillarColor = new Color(0, 255, 0);
+        readonly static Color TreeColor = new Color(0, 230, 0);
+        readonly static Color BushColor = new Color(0, 210, 0);
         readonly static Color TableColor = new Color(0, 190, 0);
+        readonly static Color BookshelfColor = new Color(0, 170, 0);
+
+
 
         readonly static Color Door_2Color = new Color(255, 230, 0);
         readonly static Color ChandelierColor = new Color(255, 210, 0);
+
+        readonly static Color ChickenColor = new Color(255, 170, 0);
 
 
         public World(string filepath)
@@ -125,11 +132,27 @@ namespace World_Of_Rectangle.Game
                 Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Pillar_2x2");
                 result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Pillar_2x2"));
             }
+            else if (color == TreeColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Tree");
+                result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Tree"));
+            }
+            else if (color == BushColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Bush");
+                result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Bush"));
+            }
             else if (color == TableColor)
             {
                 Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Table_Round");
                 result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Table_Round"));
             }
+            else if (color == BookshelfColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Bookshelf");
+                result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Bookshelf"));
+            }
+
             else if (color == Door_2Color)
             {
                 Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Door_2");
@@ -139,6 +162,11 @@ namespace World_Of_Rectangle.Game
             {
                 Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Chandelier");
                 result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Chandelier"));
+            }
+            else if (color == ChickenColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Chicken");
+                result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Chicken"));
             }
             return result;
         }
