@@ -121,7 +121,7 @@ namespace sat.Shape
         /// <returns>true if point is inside of the object</returns>
         public override bool contains(Vector2 point)
         {
-            return (middlePoint - point).LengthSquared() <= radius * radius;
+            return (MiddlePoint - point).LengthSquared() <= radius * radius;
         }
 
         /// <summary>

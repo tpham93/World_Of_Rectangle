@@ -14,7 +14,7 @@ namespace World_Of_Rectangle.Gamestates
             this.game = game;
         }
 
-        public void Load(Microsoft.Xna.Framework.Content.ContentManager content)
+        public void LoadContent(Microsoft.Xna.Framework.Content.ContentManager content)
         {
             throw new NotImplementedException();
         }

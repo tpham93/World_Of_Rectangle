@@ -22,7 +22,14 @@ namespace sat.Shape
         /*
          * Xna-specific attributes for drawing and handling calculations
          */
-        protected Vector2 middlePoint;
+        private Vector2 middlePoint;
+
+        public Vector2 MiddlePoint
+        {
+            get { return middlePoint; }
+            set { middlePoint = value; }
+        }
+        private bool moveable;
 
         public abstract EShapeType ShapeType
         {
@@ -47,8 +54,12 @@ namespace sat.Shape
             get;
             set;
         }
+        public bool Moveable
+        {
+            get { return moveable; }
+            set { moveable = value; }
+        }
 
-        protected bool moveable;
 
         /// <summary>
         /// Constructor

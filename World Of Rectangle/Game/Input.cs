@@ -87,6 +87,10 @@ namespace World_Of_Rectangle.Game
         {
             return currentPosition;
         }
+        public static Vector2 mousePositionV()
+        {
+            return new Vector2(currentPosition.X, currentPosition.Y);
+        }
 
         public static bool mouseButtonClicked(EMouseButton button)
         {

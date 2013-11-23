@@ -80,7 +80,7 @@ namespace sat.Shape
 
             for (int i = 0; i < corners.Length; ++i)
             {
-                this.corners[i] = new Vector2(corners[i].X, corners[i].Y) - middlePoint;
+                this.corners[i] = new Vector2(corners[i].X, corners[i].Y) - MiddlePoint;
                 this.currentCorners[i] = this.corners[i] + position;
             }
             for (int i = 1; i <= corners.Length; ++i)
@@ -246,7 +246,7 @@ namespace sat.Shape
         /// <param name="height">the texture's height</param>
         /// <param name="color">the tecture's filling color</param>
         /// <returns>a texture for an EdgeObject</returns>
-        public static Texture2D genTexture(Vector2[] corners, Vector2 fillPoint, int width, int height, Color color)
+        public static Texture2D genTexture(Vector2[] corners, Vector2 fillPoint, int width, int height, Color color, Color outline)
         {
             Texture2D pixel = new Texture2D(graphicsDevice, 1, 1);
             pixel.SetData(new Color[] { Color.White });
@@ -254,6 +254,7 @@ namespace sat.Shape
 
             RenderTarget2D renderTarget = new RenderTarget2D(graphicsDevice, width, height, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
             graphicsDevice.SetRenderTarget(renderTarget);
+
 
             graphicsDevice.Clear(Color.Transparent);
 
@@ -263,7 +264,7 @@ namespace sat.Shape
             {
                 Vector2 startPoint = corners[i - 1];
                 Vector2 edge = corners[i % corners.Length] - corners[i - 1];
-                spriteBatch.Draw(pixel, new Rectangle((int)startPoint.X, (int)startPoint.Y, (int)Math.Ceiling(edge.Length()), 1), null, color, (float)Helper.getAngleFromVector2(edge), Vector2.Zero, SpriteEffects.None, 0);
+                spriteBatch.Draw(pixel, new Rectangle((int)startPoint.X, (int)startPoint.Y, (int)Math.Ceiling(edge.Length()), 1), null, outline, (float)Helper.getAngleFromVector2(edge), Vector2.Zero, SpriteEffects.None, 0);
             }
             spriteBatch.End();
 
@@ -280,7 +281,7 @@ namespace sat.Shape
             {
                 Point currentPos = nextPoints.Pop();
                 int index = currentPos.X + currentPos.Y * width;
-                if (pixels[index] == Color.Transparent)
+                if (pixels[index] != outline)
                 {
                     pixels[index] = color;
                     if (currentPos.X > 0 && pixels[index - 1] == Color.Transparent)
@@ -308,14 +309,16 @@ namespace sat.Shape
 
         public static Vector2[] genCorners(Vector2 rectangleSize)
         {
+            return genCorners(rectangleSize, rectangleSize / 2);
+        }
+        public static Vector2[] genCorners(Vector2 rectangleSize, Vector2 origin)
+        {
             Vector2[] corners = new Vector2[4];
 
-            rectangleSize *= 0.5f;
-
-            corners[0] = new Vector2(rectangleSize.X * -1, rectangleSize.Y * -1);
-            corners[1] = new Vector2(rectangleSize.X * -1, rectangleSize.Y * 1);
-            corners[2] = new Vector2(rectangleSize.X * 1, rectangleSize.Y * 1);
-            corners[3] = new Vector2(rectangleSize.X * -1, rectangleSize.Y * 1);
+            corners[0] = new Vector2(0, 0) - origin;
+            corners[1] = new Vector2(0, rectangleSize.Y * 1) - origin;
+            corners[2] = new Vector2(rectangleSize.X * 1, rectangleSize.Y * 1) - origin;
+            corners[3] = new Vector2(rectangleSize.X * 1, 0) - origin;
 
             return corners;
         }

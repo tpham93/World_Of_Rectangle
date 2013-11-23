@@ -4,11 +4,20 @@ using System.Linq;
 using System.Text;
 
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace sat.Etc
 {
     class Helper
     {
+
+        static GraphicsDevice graphicsDevice;
+
+        public static void Initialize(GraphicsDevice graphicsDevice)
+        {
+            Helper.graphicsDevice = graphicsDevice;
+        }
+
         /// <summary>
         /// rotates a vector
         /// </summary>
@@ -56,8 +65,33 @@ namespace sat.Etc
         /// <param name="a">1st vector</param>
         /// <param name="b">2nd vector</param>
         /// <returns>scalar of the crossproduct</returns>
-        public static float crossProduct(Vector2 a, Vector2 b){
+        public static float crossProduct(Vector2 a, Vector2 b)
+        {
             return a.X * b.Y - a.Y * b.X;
+        }
+
+        public static Texture2D genRectangle(int width, int height,Color color, Color outline)
+        {
+            RenderTarget2D renderTarget = new RenderTarget2D(graphicsDevice, width, height);
+
+            Color[] pixel = new Color[width * height];
+
+            for (int y = 0; y < height; ++y)
+            {
+                for (int x = 0; x < width; ++x)
+                {
+                    if (x == 0 || y == 0 || x == width - 1 || y == height - 1)
+                    {
+                        pixel[x + y * width] = outline;
+                    }
+                    else
+                    {
+                        pixel[x + y * width] = color;
+                    }
+                }
+            }
+            renderTarget.SetData<Color>(pixel);
+            return renderTarget;
         }
     }
 }

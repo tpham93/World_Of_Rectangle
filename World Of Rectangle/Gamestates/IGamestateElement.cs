@@ -11,7 +11,9 @@ namespace World_Of_Rectangle.Gamestates
 {
     enum EGameStates
     {
+        Nothing,
         Menu,
+        Intro,
         Game,
         Credits,
         Inventory,
@@ -20,7 +22,7 @@ namespace World_Of_Rectangle.Gamestates
 
     interface IGamestateElement
     {
-        void Load(ContentManager content);
+        void LoadContent(ContentManager content);
         EGameStates Update(GameTime gameTime);
         void Draw(GameTime gameTime, SpriteBatch spriteBatch);
         void Unload();

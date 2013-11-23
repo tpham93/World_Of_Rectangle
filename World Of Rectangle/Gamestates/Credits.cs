@@ -7,7 +7,7 @@ namespace World_Of_Rectangle.Gamestates
 {
     class Credits : IGamestateElement
     {
-        public void Load(Microsoft.Xna.Framework.Content.ContentManager content)
+        public void LoadContent(Microsoft.Xna.Framework.Content.ContentManager content)
         {
             throw new NotImplementedException();
         }

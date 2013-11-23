@@ -18,7 +18,7 @@ namespace World_Of_Rectangle.Gamestates
 
             keys[(int)Player.ActionKeys.MoveForward] = Keys.W;
             keys[(int)Player.ActionKeys.MoveBackward] = Keys.S;
-            keys[(int)Player.ActionKeys.MoveLeft] = Keys.L;
+            keys[(int)Player.ActionKeys.MoveLeft] = Keys.A;
             keys[(int)Player.ActionKeys.MoveRight] = Keys.D;
             keys[(int)Player.ActionKeys.Attack] = Keys.Space;
             keys[(int)Player.ActionKeys.Inventory] = Keys.Escape;
@@ -26,14 +26,14 @@ namespace World_Of_Rectangle.Gamestates
             player = new Player( Vector2.Zero,0.0f,keys);
         }
 
-        public void Load(Microsoft.Xna.Framework.Content.ContentManager content)
+        public void LoadContent(Microsoft.Xna.Framework.Content.ContentManager content)
         {
             player.LoadContent(content);
         }
 
         public EGameStates Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            Action playerAction =  player.Update();
+            Action playerAction =  player.Update(gameTime);
 
             switch (playerAction)
             {
@@ -46,6 +46,7 @@ namespace World_Of_Rectangle.Gamestates
 
         public void Draw(Microsoft.Xna.Framework.GameTime gameTime, Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
+            
             spriteBatch.Begin(
                 SpriteSortMode.Immediate,
                 null,
@@ -53,7 +54,7 @@ namespace World_Of_Rectangle.Gamestates
                 null,
                 null,
                 null,
-                Matrix.CreateTranslation(new Vector3(player.Position,0)) * Matrix.CreateScale(Global.scaleValues)
+                Matrix.CreateTranslation(-new Vector3(player.Position,0) + new Vector3(Global.REFERENCE_SCREENSIZE/2,0)) * Matrix.CreateScale(Global.scaleValues)
                 );
 
             player.Draw(gameTime, spriteBatch);

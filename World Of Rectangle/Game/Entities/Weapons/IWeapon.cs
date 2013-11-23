@@ -7,27 +7,15 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-using sat.Etc;
 using sat.Shape;
 
-namespace World_Of_Rectangle.Game.Entities
+namespace World_Of_Rectangle.Game.Entities.Weapons
 {
-    enum Action
+    abstract class IWeapon
     {
-        Nothing,
-        Attack,
-        Inventory,
-        Die
-    }
+        protected bool attacking;
 
-    enum Team
-    {
-        Good,
-        Evil,
-    }
 
-    abstract class IEntity
-    {
 
         private Shape2D shape;
         private Texture2D texture;
@@ -38,6 +26,11 @@ namespace World_Of_Rectangle.Game.Entities
         private float contactDamage;
         private bool moveable;
         private Team team;
+
+        public bool Attacking
+        {
+            get { return attacking; }
+        }
 
         public Shape2D Shape
         {
@@ -87,7 +80,8 @@ namespace World_Of_Rectangle.Game.Entities
             }
         }
 
-        protected IEntity(Vector2 position, float rotation, bool moveable, float contactDamage, float hp, Team team =  Team.Good)
+
+        public IWeapon(Vector2 position, float rotation, bool moveable, float contactDamage, float hp, Team team = Team.Good)
         {
             this.shape = null;
             this.texture = null;
@@ -98,13 +92,18 @@ namespace World_Of_Rectangle.Game.Entities
             this.contactDamage = contactDamage;
             this.hp = hp;
             this.team = team;
+
+            attacking = false;
         }
 
+
         public abstract void LoadContent(ContentManager content);
-        public abstract Action Update(GameTime gameTime);
+        public abstract void Update(GameTime gameTime, IEntity owner);
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, Position, null, Color.White, Rotation, textureOrigin, 1, SpriteEffects.None, 0);
         }
+
+        public abstract void attack();
     }
 }

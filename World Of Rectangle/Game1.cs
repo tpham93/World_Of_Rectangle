@@ -44,16 +44,18 @@ namespace World_Of_Rectangle
             // TODO: Add your initialization logic here
 
             //graphics.IsFullScreen = true;
+            Global.SCREENSIZE = new Vector2(GraphicsDevice.DisplayMode.Width, GraphicsDevice.DisplayMode.Height);
             graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
             graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
             graphics.ApplyChanges();
 
-            const float baseWidth = 1400;
-            const float baseHeight = 900;
+            sat.Shape.Shape2D.Initialize(GraphicsDevice);
+            sat.Etc.Helper.Initialize(GraphicsDevice);
+            Input.Initialize();
+            IsMouseVisible = true;
+            Global.scaleValues = new Vector3(GraphicsDevice.DisplayMode.Width / Global.REFERENCE_SCREENSIZE.X,  GraphicsDevice.DisplayMode.Height / Global.REFERENCE_SCREENSIZE.Y, 1.0f);
+            GameState = EGameStates.Menu;
 
-            Global.scaleValues = new Vector3(baseWidth / GraphicsDevice.DisplayMode.Width, baseHeight / GraphicsDevice.DisplayMode.Height, 1.0f);
-
-            //sat.Shape.Shape2D.Initialize(GraphicsDevice);
 
             base.Initialize();
         }
@@ -67,7 +69,7 @@ namespace World_Of_Rectangle
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            //gameStateElement.LoadContent(Content);
         }
 
         /// <summary>
@@ -91,6 +93,8 @@ namespace World_Of_Rectangle
                 this.Exit();
 
             // TODO: Add your update logic here
+            Input.Update();
+            GameState = gameStateElement.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -101,13 +105,17 @@ namespace World_Of_Rectangle
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here
 
 
 
             base.Draw(gameTime);
+            //spriteBatch.Begin();
+            //spriteBatch.Draw(Content.Load<Texture2D>("button_name"),Input.mousePositionV(),Color.White);
+            //spriteBatch.End();
+            gameStateElement.Draw(gameTime, spriteBatch);
         }
 
         internal EGameStates GameState
@@ -124,7 +132,12 @@ namespace World_Of_Rectangle
                         case EGameStates.Menu:
                             gameStateElement = new Menu();
                             tmpGameStateElement = null;
-                            gameStateElement.Load(Content);
+                            gameStateElement.LoadContent(Content);
+                            break;
+                        case EGameStates.Intro:
+                            gameStateElement = new Intro();
+                            tmpGameStateElement = null;
+                            gameStateElement.LoadContent(Content);
                             break;
                         case EGameStates.Game:
                             // if gemstate was EGameStates.Inventory then load paused game, otherwise create a new one
@@ -136,7 +149,7 @@ namespace World_Of_Rectangle
                             else
                             {
                                 gameStateElement = new ActualGame();
-                                gameStateElement.Load(Content);
+                                gameStateElement.LoadContent(Content);
                             }
                             tmpGameStateElement = null;
                             break;
@@ -145,7 +158,7 @@ namespace World_Of_Rectangle
                             {
                                 tmpGameStateElement = gameStateElement;
                                 gameStateElement = new Inventory(gameStateElement);
-                                gameStateElement.Load(Content);
+                                gameStateElement.LoadContent(Content);
                             }
                             break;
                         case EGameStates.Close:
@@ -153,7 +166,7 @@ namespace World_Of_Rectangle
                             break;
                         case EGameStates.Credits:
                             gameStateElement = new Credits();
-                            gameStateElement.Load(Content);
+                            gameStateElement.LoadContent(Content);
                             break;
                     }
                     gameState = value;
