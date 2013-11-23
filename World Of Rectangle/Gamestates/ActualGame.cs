@@ -10,6 +10,7 @@ namespace World_Of_Rectangle.Gamestates
     class ActualGame : IGamestateElement
     {
         Player player;
+        World world;
         
 
         public ActualGame()
@@ -24,6 +25,8 @@ namespace World_Of_Rectangle.Gamestates
             keys[(int)Player.ActionKeys.Inventory] = Keys.Escape;
 
             player = new Player( Vector2.Zero,0.0f,keys);
+
+            world = new World(@"Maps\map_1.png");
         }
 
         public void LoadContent(Microsoft.Xna.Framework.Content.ContentManager content)
@@ -58,6 +61,7 @@ namespace World_Of_Rectangle.Gamestates
                 );
 
             player.Draw(gameTime, spriteBatch);
+            world.Draw(gameTime, spriteBatch);
 
 
             spriteBatch.End();

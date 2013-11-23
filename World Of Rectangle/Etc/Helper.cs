@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Text;
 
 using Microsoft.Xna.Framework;
@@ -93,5 +94,46 @@ namespace sat.Etc
             renderTarget.SetData<Color>(pixel);
             return renderTarget;
         }
+
+        public static Texture2D loadImage(String filename, Rectangle rect = new Rectangle(), Color color = new Color())
+        {
+            //Might throw FileNotFoundException
+            FileStream fileStream = new FileStream(filename, FileMode.Open);
+            Texture2D texture = Texture2D.FromStream(graphicsDevice, fileStream);
+            fileStream.Close();
+            // returns original car if the rectangle has no size
+            if (rect.Width <= 0 || rect.Height <= 0)
+            {
+                return texture;
+            }
+            else
+            {
+                // rendertarget to save the resized image
+                RenderTarget2D renderTarget = new RenderTarget2D(graphicsDevice, rect.Width, rect.Height, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
+                // create  spriteBatch to draw the resized image
+                SpriteBatch spriteBatch = new SpriteBatch(graphicsDevice);
+                // save the earlier rendertargets
+                RenderTargetBinding[] tmpRenderTargets = graphicsDevice.GetRenderTargets();
+                graphicsDevice.SetRenderTarget(renderTarget);
+                // draw the resized image on the rendertarget
+                graphicsDevice.Clear(Color.Transparent);
+                spriteBatch.Begin();
+                if (color.Equals(new Color()))
+                {
+                    spriteBatch.Draw(texture, rect, Color.White);
+                }
+                else
+                {
+                    spriteBatch.Draw(texture, rect, color);
+                }
+                spriteBatch.End();
+                // set back the saved rendertargets
+                graphicsDevice.SetRenderTargets(tmpRenderTargets);
+                // return the resized drawn Iimage
+                return renderTarget;
+            }
+        }
+
+
     }
 }

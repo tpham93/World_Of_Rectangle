@@ -48,7 +48,7 @@ namespace World_Of_Rectangle
             graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
             graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
             graphics.ApplyChanges();
-
+            World.Initialize(Content);
             sat.Shape.Shape2D.Initialize(GraphicsDevice);
             sat.Etc.Helper.Initialize(GraphicsDevice);
             Input.Initialize();
