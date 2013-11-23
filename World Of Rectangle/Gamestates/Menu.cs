@@ -45,7 +45,8 @@ namespace World_Of_Rectangle.Gamestates
         public void LoadContent(Microsoft.Xna.Framework.Content.ContentManager content)
         {
             nameTexture = content.Load<Texture2D>(@"button_name");
-            nameRectangle = new Rectangle((int)SPACE_WINDOW_NAME.X, (int)SPACE_WINDOW_NAME.Y, nameWidth, nameHeight);
+            Vector2 namePosition = Vector2.Transform(SPACE_WINDOW_NAME, Matrix.CreateScale(Global.scaleValues));
+            nameRectangle = new Rectangle((int)namePosition.X, (int)namePosition.Y, nameWidth, nameHeight);
             
             buttonTextures[0] = content.Load<Texture2D>(@"button_start");
             buttonTextures[1] = content.Load<Texture2D>(@"button_credits");
