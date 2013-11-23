@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 
 using World_Of_Rectangle.Game.Entities;
 
-
+using sat.Etc;
 
 namespace World_Of_Rectangle.Game
 {
@@ -25,6 +25,7 @@ namespace World_Of_Rectangle.Game
 
         List<IEntity> enemies;
 
+        
 
         public Vector2 CamPosition
         {
@@ -62,6 +63,7 @@ namespace World_Of_Rectangle.Game
         {
             passebleEntities = new List<IEntity>();
             solidEntities = new List<IEntity>();
+            enemies = new List<IEntity>();
 
             Texture2D map = sat.Etc.Helper.loadImage(filepath);
             Color[] pixel = new Color[map.Width *  map.Height];
@@ -89,7 +91,7 @@ namespace World_Of_Rectangle.Game
                 {
                     if (pixel[i] == new Color(0,0,255))
                     {
-                        startPoint = new Vector2((x * Global.TILE_SIZE), (y * Global.TILE_SIZE));
+                        startPoint = new Vector2(x,y)*Global.TILE_SIZE;
                     }
                 }
             }
@@ -174,7 +176,40 @@ namespace World_Of_Rectangle.Game
         public void Update(GameTime gameTime)
         {
             player.Update(gameTime);
+            //if (Input.isKeyDown(Keys.K))
+            //{
+
+            //}
+            for (int i = 0; i < enemies.Count; ++i)
+            {
+                enemies[i].Update(gameTime);
+
+                IntersectData intersectData = enemies[i].Shape.intersects(player.Shape);
+
+                if (intersectData.Intersects)
+                {
+                    player.Position += intersectData.Mtv * intersectData.Distance/2;
+                    enemies[i].Position += intersectData.Mtv * intersectData.Distance/2;
+
+                    
+                }
+            }
+            for (int i = 0; i < solidEntities.Count; ++i)
+            {
+                solidEntities[i].Update(gameTime);
+
+                IntersectData intersectData = solidEntities[i].Shape.intersects(player.Shape);
+
+                if (intersectData.Intersects)
+                {
+                    player.Position += intersectData.Mtv * intersectData.Distance;
+                }
+            }
+
+
         }
+
+        int cNR = 0;
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {

@@ -17,7 +17,7 @@ namespace World_Of_Rectangle.Game.Entities
         {
             Texture = texture;
             Vector2 size = new Vector2(texture.Width,texture.Height);
-            Shape = null;
+            Shape = new EdgeShape(EdgeShape.genCorners(size),size,position);
             TextureOrigin = new Vector2(texture.Width/2,texture.Height/2);
         }
 

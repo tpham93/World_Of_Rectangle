@@ -30,7 +30,7 @@ namespace World_Of_Rectangle.Game.Entities.Weapons
         {
             Texture = content.Load<Texture2D>(@"sword");
             Vector2 size = new Vector2(Global.TILE_SIZE * 0.5f, Global.TILE_SIZE * 3);
-            Shape = new EdgeShape(EdgeShape.genCorners(size,new Vector2(size.Y*0.25f,size.X * 0.9f)),size,Position,false);
+            Shape = new EdgeShape(EdgeShape.genCorners(size),size,new Vector2(size.Y*0.25f,size.X * 0.9f),Position,false);
         }
 
         public override void attack()

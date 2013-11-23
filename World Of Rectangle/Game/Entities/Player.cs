@@ -106,9 +106,9 @@ namespace World_Of_Rectangle.Game.Entities
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Texture, Position, null, Color.White, Rotation, TextureOrigin, 1, SpriteEffects.None, 0);
             if (weapon.Attacking)
                 weapon.Draw(gameTime, spriteBatch);
+            base.Draw(gameTime, spriteBatch);
         }
     }
 }
