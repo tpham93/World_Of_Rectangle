@@ -50,13 +50,19 @@ namespace World_Of_Rectangle.Game
         readonly static Color BushColor = new Color(0, 210, 0);
         readonly static Color TableColor = new Color(0, 190, 0);
         readonly static Color BookshelfColor = new Color(0, 170, 0);
+        readonly static Color OvenColor = new Color(0, 150, 0);
+        readonly static Color BasketColor = new Color(0, 130, 0);
+        readonly static Color Table_4x4Color = new Color(0, 110, 0);
+        readonly static Color Table_GiantColor = new Color(0, 90, 0);
+        
 
 
-
+        readonly static Color Door_1Color = new Color(255, 250, 0);
         readonly static Color Door_2Color = new Color(255, 230, 0);
         readonly static Color ChandelierColor = new Color(255, 210, 0);
-
+        readonly static Color Chair_GroupColor = new Color(255, 190, 0);
         readonly static Color ChickenColor = new Color(255, 170, 0);
+        readonly static Color BenchColor = new Color(255, 150, 0);
 
 
         public World(string filepath)
@@ -115,7 +121,6 @@ namespace World_Of_Rectangle.Game
             World.content = content;
         }
 
-
         public void LoadContent(Microsoft.Xna.Framework.Content.ContentManager content)
         {
             player.LoadContent(content);
@@ -159,23 +164,64 @@ namespace World_Of_Rectangle.Game
                 Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Bookshelf");
                 result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Bookshelf"));
             }
+            else if (color == OvenColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Oven");
+                result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Oven"));
+            }
+            else if (color == BasketColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Basket");
+                result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Basket"));
+            }
+            else if (color == Table_4x4Color)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Table_4x4");
+                result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Table_4x4"));
+            }
+            else if (color == Table_GiantColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Table_Giant");
+                result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Table_Giant"));
+            }
+            
+            
 
+
+            //Passable objects
+            else if (color == Door_1Color)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Door_1");
+                result = new PassableEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Door_1"));
+            }
             else if (color == Door_2Color)
             {
                 Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Door_2");
-                result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Door_2"));
+                result = new PassableEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Door_2"));
             }
             else if (color == ChandelierColor)
             {
                 Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Chandelier");
-                result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Chandelier"));
+                result = new PassableEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Chandelier"));
+            }
+            else if (color == Chair_GroupColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Chair_Group");
+                result = new PassableEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Chair_Group"));
             }
             else if (color == ChickenColor)
             {
                 Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Chicken");
-                result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Chicken"));
+                result = new PassableEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Chicken"));
             }
+            else if (color == BenchColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Bench");
+                result = new PassableEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Bench"));
+            }
+
             return result;
+
         }
 
         public void Update(GameTime gameTime)
