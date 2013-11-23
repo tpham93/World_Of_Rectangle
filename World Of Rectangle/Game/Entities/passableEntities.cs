@@ -10,10 +10,10 @@ using sat.Shape;
 
 namespace World_Of_Rectangle.Game.Entities
 {
-    class PasseableEntities : IEntity
+    class PassableEntities : IEntity
     {
 
-        public PasseableEntities(Vector2 position, Texture2D texture) : base(position, 0, true, 0, float.PositiveInfinity)
+        public PassableEntities(Vector2 position, Texture2D texture) : base(position, 0, true, 0, float.PositiveInfinity)
         {
             Texture = texture;
             Vector2 size = new Vector2(texture.Width,texture.Height);
