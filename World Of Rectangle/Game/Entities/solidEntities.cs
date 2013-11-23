@@ -18,6 +18,7 @@ namespace World_Of_Rectangle.Game.Entities
             Texture = texture;
             Vector2 size = new Vector2(texture.Width,texture.Height);
             Shape = null;
+            TextureOrigin = new Vector2(texture.Width/2,texture.Height/2);
         }
 
         public override void LoadContent(Microsoft.Xna.Framework.Content.ContentManager content)

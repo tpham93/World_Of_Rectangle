@@ -42,7 +42,6 @@ namespace World_Of_Rectangle.Game
             set { solidEntities = value; }
         }
 
-        readonly static Color PillarColor = new Color(0,0,0);
         //solid colours
         readonly static Color WallColor = new Color(0,0,0);
         readonly static Color PillarColor = new Color(0, 255, 0);
@@ -115,32 +114,33 @@ namespace World_Of_Rectangle.Game
 
         private static IEntity colorToEntitiy(Color color, Vector2 position)
         {
+            IEntity result = null;
             if(color == WallColor)
             {
                 Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Wall");
-                return new SolidEntities(position + new Vector2(texture.Width/2,texture.Height/2),content.Load<Texture2D>(@"Levelgrafiken PNG\Wall"));
+                result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Wall"));
             }
-            if (color == PillarColor)
+            else if (color == PillarColor)
             {
                 Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Pillar_2x2");
-                return new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Pillar_2x2"));
+                result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Pillar_2x2"));
             }
-            if (color == TableColor)
+            else if (color == TableColor)
             {
                 Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Table_Round");
-                return new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Table_Round"));
+                result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Table_Round"));
             }
-            if (color == Door_2Color)
+            else if (color == Door_2Color)
             {
                 Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Door_2");
-                return new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Door_2"));
+                result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Door_2"));
             }
-            if (color == ChandelierColor)
+            else if (color == ChandelierColor)
             {
                 Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Chandelier");
-                return new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Chandelier"));
+                result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Chandelier"));
             }
-            return null;
+            return result;
         }
 
         public void Update(GameTime gameTime)
