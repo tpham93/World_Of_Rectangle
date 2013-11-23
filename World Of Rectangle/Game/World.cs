@@ -20,7 +20,13 @@ namespace World_Of_Rectangle.Game
         List<IEntity> passebleEntities;
         List<IEntity> solidEntities;
 
-        readonly static Color PillarColor = new Color(0,0,0);
+        //solid colours
+        readonly static Color WallColor = new Color(0,0,0);
+        readonly static Color PillarColor = new Color(0, 255, 0);
+        readonly static Color TableColor = new Color(0, 190, 0);
+
+        readonly static Color Door_2Color = new Color(255, 230, 0);
+        readonly static Color ChandelierColor = new Color(255, 210, 0);
 
 
         public World(string filepath)
@@ -58,10 +64,30 @@ namespace World_Of_Rectangle.Game
 
         private static IEntity colorToEntitiy(Color color, Vector2 position)
         {
-            if(color == PillarColor)
+            if(color == WallColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Wall");
+                return new SolidEntities(position + new Vector2(texture.Width/2,texture.Height/2),content.Load<Texture2D>(@"Levelgrafiken PNG\Wall"));
+            }
+            if (color == PillarColor)
             {
                 Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Pillar_2x2");
-                return new SolidEntities(position + new Vector2(texture.Width/2,texture.Height/2),content.Load<Texture2D>(@"Levelgrafiken PNG\Pillar_2x2"));
+                return new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Pillar_2x2"));
+            }
+            if (color == TableColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Table_Round");
+                return new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Table_Round"));
+            }
+            if (color == Door_2Color)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Door_2");
+                return new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Door_2"));
+            }
+            if (color == ChandelierColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Chandelier");
+                return new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Chandelier"));
             }
             return null;
         }
