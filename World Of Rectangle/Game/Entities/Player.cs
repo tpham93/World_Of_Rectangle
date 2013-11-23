@@ -28,7 +28,7 @@ namespace World_Of_Rectangle.Game.Entities
         }
 
         protected Keys[] keys;
-        protected const float MOVESPEED_PS = 100.0f;
+        protected const float MOVESPEED_PS = 500.0f;
         protected TimeSpan attackCooldown;
         protected int sp;
 
