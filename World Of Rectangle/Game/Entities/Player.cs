@@ -96,6 +96,7 @@ namespace World_Of_Rectangle.Game.Entities
             if (CanAttack && Input.mouseButtonClicked(Input.EMouseButton.LeftButton))
             {
                 weapon.attack();
+                attackCooldown = TimeSpan.FromSeconds(0.75f);
             }
 
             weapon.Update(gameTime, this);

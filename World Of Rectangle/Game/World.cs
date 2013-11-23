@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 using World_Of_Rectangle.Game.Entities;
 
@@ -17,8 +18,29 @@ namespace World_Of_Rectangle.Game
     {
         static ContentManager content;
 
+        Player player;
+
         List<IEntity> passebleEntities;
         List<IEntity> solidEntities;
+
+        List<IEntity> enemies;
+
+
+        public Vector2 CamPosition
+        {
+            get { return player.Position; }
+        }
+
+        public List<IEntity> PassebleEntities
+        {
+            get { return passebleEntities; }
+            set { passebleEntities = value; }
+        }
+        public List<IEntity> SolidEntities
+        {
+            get { return solidEntities; }
+            set { solidEntities = value; }
+        }
 
         readonly static Color PillarColor = new Color(0,0,0);
 
@@ -32,6 +54,8 @@ namespace World_Of_Rectangle.Game
             Color[] pixel = new Color[map.Width *  map.Height];
             map.GetData<Color>(pixel);
 
+            Vector2 startPoint = Vector2.Zero;
+
             for (int i = 0; i < pixel.Length; ++i)
             {
                 int x = i % map.Width;
@@ -41,19 +65,45 @@ namespace World_Of_Rectangle.Game
                 {
                     if (entity.Moveable)
                     {
-
+                        passebleEntities.Add(entity);
                     }
                     else
                     {
                         solidEntities.Add(entity);
                     }
                 }
+                else
+                {
+                    if (pixel[i] == new Color(0,0,255))
+                    {
+                        startPoint = new Vector2((x * Global.TILE_SIZE), (y * Global.TILE_SIZE));
+                    }
+                }
             }
+
+
+            Keys[] keys = new Keys[(int)Player.ActionKeys.KeyCount];
+
+            keys[(int)Player.ActionKeys.MoveForward] = Keys.W;
+            keys[(int)Player.ActionKeys.MoveBackward] = Keys.S;
+            keys[(int)Player.ActionKeys.MoveLeft] = Keys.A;
+            keys[(int)Player.ActionKeys.MoveRight] = Keys.D;
+            keys[(int)Player.ActionKeys.Attack] = Keys.Space;
+            keys[(int)Player.ActionKeys.Inventory] = Keys.Escape;
+
+            player = new Player(startPoint, 0.0f, keys);
+
         }
 
         public static void Initialize(ContentManager content)
         {
             World.content = content;
+        }
+
+
+        public void LoadContent(Microsoft.Xna.Framework.Content.ContentManager content)
+        {
+            player.LoadContent(content);
         }
 
         private static IEntity colorToEntitiy(Color color, Vector2 position)
@@ -66,8 +116,15 @@ namespace World_Of_Rectangle.Game
             return null;
         }
 
-        public void Draw(GameTime gameTime,  SpriteBatch spriteBatch)
+        public void Update(GameTime gameTime)
         {
+            player.Update(gameTime);
+        }
+
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            player.Draw(gameTime,spriteBatch);
+
             for (int i = 0; i < passebleEntities.Count; ++i)
             {
                 passebleEntities[i].Draw(gameTime, spriteBatch);

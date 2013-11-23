@@ -9,40 +9,31 @@ namespace World_Of_Rectangle.Gamestates
 {
     class ActualGame : IGamestateElement
     {
-        Player player;
         World world;
         
 
         public ActualGame()
         {
-            Keys[] keys = new Keys[(int)Player.ActionKeys.KeyCount];
-
-            keys[(int)Player.ActionKeys.MoveForward] = Keys.W;
-            keys[(int)Player.ActionKeys.MoveBackward] = Keys.S;
-            keys[(int)Player.ActionKeys.MoveLeft] = Keys.A;
-            keys[(int)Player.ActionKeys.MoveRight] = Keys.D;
-            keys[(int)Player.ActionKeys.Attack] = Keys.Space;
-            keys[(int)Player.ActionKeys.Inventory] = Keys.Escape;
-
-            player = new Player( Vector2.Zero,0.0f,keys);
 
             world = new World(@"Maps\map_1.png");
         }
 
         public void LoadContent(Microsoft.Xna.Framework.Content.ContentManager content)
         {
-            player.LoadContent(content);
+            world.LoadContent(content);
         }
 
         public EGameStates Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            Action playerAction =  player.Update(gameTime);
+            //Action playerAction =  player.Update(gameTime);
 
-            switch (playerAction)
-            {
-                case Action.Inventory:
-                    return EGameStates.Inventory;
-            }
+            //switch (playerAction)
+            //{
+            //    case Action.Inventory:
+            //        return EGameStates.Inventory;
+            //}
+
+            world.Update(gameTime);
 
             return EGameStates.Game;
         }
@@ -57,10 +48,9 @@ namespace World_Of_Rectangle.Gamestates
                 null,
                 null,
                 null,
-                Matrix.CreateTranslation(-new Vector3(player.Position,0) + new Vector3(Global.REFERENCE_SCREENSIZE/2,0)) * Matrix.CreateScale(Global.scaleValues)
-                );
+                Matrix.CreateTranslation(-new Vector3(world.CamPosition,0) + new Vector3(Global.REFERENCE_SCREENSIZE/2,0)) * Matrix.CreateScale(Global.scaleValues));
 
-            player.Draw(gameTime, spriteBatch);
+            //player.Draw(gameTime, spriteBatch);
             world.Draw(gameTime, spriteBatch);
 
 

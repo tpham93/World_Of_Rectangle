@@ -158,9 +158,10 @@ namespace World_Of_Rectangle.Gamestates
                     break;
                 case IntroState.Animation:
                     spriteBatch.Draw(castleTexture, castleRect, Color.White);
-                    spriteBatch.Draw(playerTexture,playerRect, Color.White);
+                    spriteBatch.Draw(playerTexture, playerRect, Color.White);
                     break;
                 case IntroState.Ending:
+                    spriteBatch.Draw(castleTexture, castleRect, Color.White);
                     break;
 
             }
