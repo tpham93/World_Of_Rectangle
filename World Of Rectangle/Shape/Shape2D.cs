@@ -106,6 +106,9 @@ namespace sat.Shape
                         case EShapeType.EdgeShape:
                             intersectData = intersects((EdgeShape)o);
                             break;
+                        case EShapeType.RectangleShape:
+                            intersectData = intersects((RectangleShape)o);
+                            break;
                         case EShapeType.CircleShape:
                             intersectData = intersects((CircleShape)o);
                             break;
@@ -113,7 +116,7 @@ namespace sat.Shape
                             return null;
                     }
 
-                    if (Vector2.Dot(intersectData.Mtv, -o.Position + Position) < 0)
+                    if (Vector2.Dot(intersectData.Mtv, -o.Position + Position) > 0)
                     {
                         intersectData.Mtv *= -1;
                     }
@@ -127,6 +130,7 @@ namespace sat.Shape
 
 
         public abstract IntersectData intersects(EdgeShape o);
+        public abstract IntersectData intersects(RectangleShape o);
         public abstract IntersectData intersects(CircleShape o);
 
         /// <summary>

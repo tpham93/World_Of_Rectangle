@@ -132,9 +132,7 @@ namespace World_Of_Rectangle.Game
             if (color.A == 0)
             {
                 return null;
-            }
-            else
-            if (color == WallColor)
+            } else if (color == WallColor)
             {
                 Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Wall");
                 result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Wall"));
@@ -184,9 +182,6 @@ namespace World_Of_Rectangle.Game
                 Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Table_Giant");
                 result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Table_Giant"));
             }
-            
-            
-
 
             //Passable objects
             else if (color == Door_1Color)

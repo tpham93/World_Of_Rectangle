@@ -66,7 +66,7 @@ namespace World_Of_Rectangle.Game.Entities
             Texture = content.Load<Texture2D>(@"player");
             Vector2 size = new Vector2(Texture.Width, Texture.Height);
             TextureOrigin = size / 2f;
-            Shape = new EdgeShape(EdgeShape.genCorners(size), size, Position);
+            Shape = new RectangleShape(new Rectangle(0,0,(int)size.X,(int)size.Y), Position);
             weapon = new Sword(Position, Rotation, false, 20f, float.PositiveInfinity);
             weapon.LoadContent(content);
         }
