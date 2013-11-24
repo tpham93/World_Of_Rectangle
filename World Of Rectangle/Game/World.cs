@@ -64,7 +64,7 @@ namespace World_Of_Rectangle.Game
         readonly static Color AnvilColor = new Color(0, 200, 0);
         readonly static Color WhetstoneColor = new Color(0, 180, 0);
         readonly static Color WatertrugColor = new Color(0, 160, 0);
-        readonly static Color CthuluColor = new Color(0, 140, 0);
+        readonly static Color CthulhuColor = new Color(0, 140, 0);
         readonly static Color PondColor = new Color(0, 120, 0);
         readonly static Color HorseColor = new Color(0, 100, 0);
         readonly static Color Horse_InvisibleColor = new Color(0, 80, 0);
@@ -84,6 +84,8 @@ namespace World_Of_Rectangle.Game
         readonly static Color WebColor = new Color(255, 90, 0);
         readonly static Color MasterswordColor = new Color(255, 70, 0);
         readonly static Color HoardColor = new Color(255, 50, 0);
+        readonly static Color Door_BossColor = new Color(255, 30, 0);
+        readonly static Color JewelryColor = new Color(255, 10, 0);
 
 
         public World(string filepath)
@@ -248,10 +250,10 @@ namespace World_Of_Rectangle.Game
                 Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Watertrug");
                 result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Watertrug"));
             }
-            else if (color == CthuluColor)
+            else if (color == CthulhuColor)
             {
-                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Cthulu");
-                result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Cthulu"));
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Cthulhu");
+                result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Cthulhu"));
             }
             else if (color == PondColor)
             {
@@ -337,6 +339,16 @@ namespace World_Of_Rectangle.Game
             {
                 Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Hoard");
                 result = new PassableEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Hoard"));
+            }
+            else if (color == Door_BossColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Door_Boss");
+                result = new PassableEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Door_Boss"));
+            }
+            else if (color == JewelryColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Jewelry");
+                result = new PassableEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Jewelry"));
             }
 
             return result;
