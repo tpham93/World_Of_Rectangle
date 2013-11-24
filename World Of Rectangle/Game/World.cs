@@ -58,6 +58,18 @@ namespace World_Of_Rectangle.Game
         readonly static Color Bed_LargeColor = new Color(0, 50, 0);
         readonly static Color BedColor = new Color(0, 30, 0);
         readonly static Color ObstacleColor = new Color(0, 10, 0);
+
+        readonly static Color ChimneyColor = new Color(0, 240, 0);
+        readonly static Color ForgeColor = new Color(0, 220, 0);
+        readonly static Color AnvilColor = new Color(0, 200, 0);
+        readonly static Color WhetstoneColor = new Color(0, 180, 0);
+        readonly static Color WatertrugColor = new Color(0, 160, 0);
+        readonly static Color CthuluColor = new Color(0, 140, 0);
+        readonly static Color PondColor = new Color(0, 120, 0);
+        readonly static Color HorseColor = new Color(0, 100, 0);
+        readonly static Color Horse_InvisibleColor = new Color(0, 80, 0);
+        readonly static Color GateColor = new Color(0, 60, 0);
+        readonly static Color BoxesColor = new Color(0, 40, 0);
         
 
 
@@ -68,6 +80,10 @@ namespace World_Of_Rectangle.Game
         readonly static Color ChickenColor = new Color(255, 170, 0);
         readonly static Color BenchColor = new Color(255, 150, 0);
         readonly static Color ToiletColor = new Color(255, 130, 0);
+        readonly static Color BookColor = new Color(255, 110, 0);
+        readonly static Color WebColor = new Color(255, 90, 0);
+        readonly static Color MasterswordColor = new Color(255, 70, 0);
+        readonly static Color HoardColor = new Color(255, 50, 0);
 
 
         public World(string filepath)
@@ -207,11 +223,66 @@ namespace World_Of_Rectangle.Game
                 Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Obstacle");
                 result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Obstacle"));
             }
-            
-            
-            
+            else if (color == ChimneyColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Chimney");
+                result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Chimney"));
+            }
+            else if (color == ForgeColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Forge");
+                result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Forge"));
+            }
+            else if (color == AnvilColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Anvil");
+                result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Anvil"));
+            }
+            else if (color == WhetstoneColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Whetstone");
+                result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Whetstone"));
+            }
+            else if (color == WatertrugColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Watertrug");
+                result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Watertrug"));
+            }
+            else if (color == CthuluColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Cthulu");
+                result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Cthulu"));
+            }
+            else if (color == PondColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Pond");
+                result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Pond"));
+            }
+            else if (color == HorseColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Horse");
+                result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Horse"));
+            }
+            else if (color == Horse_InvisibleColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Horse_Invisible");
+                result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Horse_Invisible"));
+            }
+            else if (color == GateColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Gate");
+                result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Gate"));
+            }
+            else if (color == BoxesColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Boxes");
+                result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Boxes"));
+            }
 
-            //Passable objects
+
+
+
+       //Passable objects
             else if (color == Door_1Color)
             {
                 Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Door_1");
@@ -246,6 +317,26 @@ namespace World_Of_Rectangle.Game
             {
                 Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Toilet");
                 result = new PassableEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Toilet"));
+            }
+            else if (color == BookColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Book");
+                result = new PassableEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Book"));
+            }
+            else if (color == WebColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Web");
+                result = new PassableEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Web"));
+            }
+            else if (color == MasterswordColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Mastersword");
+                result = new PassableEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Mastersword"));
+            }
+            else if (color == HoardColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Hoard");
+                result = new PassableEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Hoard"));
             }
 
             return result;
