@@ -5,12 +5,15 @@ using System.Text;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
+
+using World_Of_Rectangle.Game.Entities.Enemies;
 
 namespace World_Of_Rectangle.Game.Entities
 {
     enum Enemies_1x1
     {
-
+        Ratte,
 
 
         Count,
@@ -93,6 +96,16 @@ namespace World_Of_Rectangle.Game.Entities
         float spawnRate;
         int possibilitieCount;
         Point[] sizes;
+
+        Vector2 position;
+
+        static ContentManager content;
+
+        public Vector2 Position
+        {
+            get { return position; }
+        }
+
         public static void Initialize()
         {
             random = new Random();
@@ -169,25 +182,26 @@ namespace World_Of_Rectangle.Game.Entities
                     switch (y)
                     {
                         case 1:
-                            switch (index)
+                            switch ((Enemies_1x1)index)
                             {
-
+                                case Enemies_1x1.Ratte:
+                                    return new BasicEnemy(Vector2.Zero, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Rat"));
                             }
                             break;
                         case 2:
-                            switch (index)
+                            switch ((Enemies_1x2)index)
                             {
 
                             }
                             break;
                         case 3:
-                            switch (index)
+                            switch ((Enemies_1x3)index)
                             {
 
                             }
                             break;
                         case 4:
-                            switch (index)
+                            switch ((Enemies_1x4)index)
                             {
 
                             }
@@ -198,19 +212,19 @@ namespace World_Of_Rectangle.Game.Entities
                     switch (y)
                     {
                         case 2:
-                            switch (index)
+                            switch ((Enemies_2x2)index)
                             {
 
                             }
                             break;
                         case 3:
-                            switch (index)
+                            switch ((Enemies_2x3)index)
                             {
 
                             }
                             break;
                         case 4:
-                            switch (index)
+                            switch ((Enemies_2x3)index)
                             {
 
                             }
@@ -221,13 +235,13 @@ namespace World_Of_Rectangle.Game.Entities
                     switch (y)
                     {
                         case 3:
-                            switch (index)
+                            switch ((Enemies_3x3)index)
                             {
 
                             }
                             break;
                         case 4:
-                            switch (index)
+                            switch ((Enemies_3x4)index)
                             {
 
                             }
@@ -238,7 +252,7 @@ namespace World_Of_Rectangle.Game.Entities
                     switch (y)
                     {
                         case 4:
-                            switch (index)
+                            switch ((Enemies_4x4)index)
                             {
 
                             }
