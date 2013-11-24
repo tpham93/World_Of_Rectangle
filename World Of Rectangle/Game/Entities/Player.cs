@@ -112,6 +112,8 @@ namespace World_Of_Rectangle.Game.Entities
 
             weapon.Update(gameTime, this);
 
+            base.Update(gameTime);
+
             return Action.Nothing;
         }
 

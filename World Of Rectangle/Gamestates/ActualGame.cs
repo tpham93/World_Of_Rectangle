@@ -25,7 +25,10 @@ namespace World_Of_Rectangle.Gamestates
         public EGameStates Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
             world.Update(gameTime);
-
+            if (!EntityManager.Player.stillLiving)
+            {
+                return EGameStates.Menu;
+            }
             return EGameStates.Game;
         }
 

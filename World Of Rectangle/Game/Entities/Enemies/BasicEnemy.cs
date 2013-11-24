@@ -31,11 +31,18 @@ namespace World_Of_Rectangle.Game.Entities.Enemies
 
         public override Action Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            Vector2 moveVector = new Vector2((float)random.NextDouble() - 0.5f, (float)random.NextDouble() - 0.5f);
-            //Vector2 moveVector = new Vector2((float)random.NextDouble(), (float)random.NextDouble());
-            moveVector.Normalize();
+            Vector2 moveVector = (EntityManager.Player.Position - Position);
 
-            Position += moveVector * 5;
+            if (moveVector.LengthSquared() > radius * radius)
+            {
+                moveVector = new Vector2((float)random.NextDouble() - 0.5f, (float)random.NextDouble() - 0.5f);
+            }
+
+            moveVector.Normalize();
+            Position += moveVector * 2;
+
+            base.Update(gameTime);
+
             return Action.Nothing;
         }
     }

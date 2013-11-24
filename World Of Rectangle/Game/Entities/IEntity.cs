@@ -38,6 +38,7 @@ namespace World_Of_Rectangle.Game.Entities
         private float rotation;
         private float hp;
         private float contactDamage;
+        private TimeSpan invincibleTime;
         private bool moveable;
         private Team team;
 
@@ -107,20 +108,44 @@ namespace World_Of_Rectangle.Game.Entities
             this.contactDamage = contactDamage;
             this.hp = hp;
             this.team = team;
+            this.invincibleTime = TimeSpan.Zero;
         }
 
         public virtual void receiveDamageFrom(IEntity entity)
         {
-            hp -= entity.contactDamage;
+            if (entity.contactDamage > 0)
+            {
+                if (invincibleTime <= TimeSpan.Zero)
+                {
+                    hp -= entity.contactDamage;
+                    invincibleTime = TimeSpan.FromSeconds(0.5);
+                }
+            }
         }
 
         public virtual void receiveDamageFrom(IWeapon weapon)
         {
-            hp -= weapon.ContactDamage;
+            if (weapon.ContactDamage > 0)
+            {
+                if (invincibleTime <= TimeSpan.Zero)
+                {
+                    hp -= weapon.ContactDamage;
+                    invincibleTime = TimeSpan.FromSeconds(0.5);
+                }
+            }
         }
 
         public abstract void LoadContent(ContentManager content);
-        public abstract Action Update(GameTime gameTime);
+        public virtual Action Update(GameTime gameTime)
+        {
+
+            if (invincibleTime > TimeSpan.Zero)
+            {
+                invincibleTime -= gameTime.ElapsedGameTime;
+            }
+
+            return Action.Nothing;
+        }
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, Position, null, Color.White, Rotation, textureOrigin, 1, SpriteEffects.None, 0);

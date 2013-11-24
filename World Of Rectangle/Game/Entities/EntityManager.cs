@@ -148,6 +148,9 @@ namespace World_Of_Rectangle.Game.Entities
 
         public static void Update(GameTime gameTime)
         {
+            //Queue<IEntity> deadEnemies = new Queue<IEntity>();
+
+            HashSet<IEntity> deadEnemies = new HashSet<IEntity>();
 
             player.Update(gameTime);
             addPlayerToChunks(player);
@@ -168,7 +171,7 @@ namespace World_Of_Rectangle.Game.Entities
                         addEnemy(entity);
                     }
                 }
-
+                
                 List<IEntity> chunkEnemies = chunk.Enemies;
                 List<IEntity> chunkSolidEntities = chunk.SolidEntities;
 
@@ -214,18 +217,25 @@ namespace World_Of_Rectangle.Game.Entities
                             if (intersectData.Intersects)
                             {
                                 enemy1.receiveDamageFrom(player.Weapon);
+                                if (!enemy1.stillLiving)
+                                {
+                                    deadEnemies.Add(enemy1);
+                                }
                             }
                         }
                     }
 
-                    for (int j = i; j < chunkEnemies.Count; ++j)
+                    for (int j = 0; j < chunkEnemies.Count; ++j)
                     {
-                        IEntity enemy2 = chunkEnemies[i];
-                        IntersectData intersectData = enemy1.Shape.intersects(enemy2.Shape);
-                        if (intersectData.Intersects)
+                        if (j != 0)
                         {
-                            enemy1.Position -= intersectData.Mtv * intersectData.Distance / 2;
-                            enemy2.Position += intersectData.Mtv * intersectData.Distance / 2;
+                            IEntity enemy2 = chunkEnemies[i];
+                            IntersectData intersectData = enemy1.Shape.intersects(enemy2.Shape);
+                            if (intersectData.Intersects)
+                            {
+                                enemy1.Position -= intersectData.Mtv * intersectData.Distance / 2;
+                                enemy2.Position += intersectData.Mtv * intersectData.Distance / 2;
+                            }
                         }
                     }
                 }
@@ -238,6 +248,10 @@ namespace World_Of_Rectangle.Game.Entities
                     Chunk chunk = map[x, y];
                     chunk.Reset();
                 }
+            }
+            foreach (IEntity deadEnemy in deadEnemies)
+            {
+                enemies.Remove(deadEnemy);
             }
         }
 

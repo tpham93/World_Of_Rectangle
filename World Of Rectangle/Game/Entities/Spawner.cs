@@ -187,7 +187,7 @@ namespace World_Of_Rectangle.Game.Entities
                             switch ((Enemies_1x1)index)
                             {
                                 case Enemies_1x1.Ratte:
-                                    return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Rat"));
+                                    return new BasicEnemy(position, 5, 10, 1500, content.Load<Texture2D>(@"Enemies\E_Rat"));
                             }
                             break;
                         case 2:
