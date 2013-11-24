@@ -67,6 +67,8 @@ namespace World_Of_Rectangle.Game
         readonly static Color Door_BossColor = new Color(255, 30, 0);
         readonly static Color JewelryColor = new Color(255, 10, 0);
 
+        readonly static Color KeyColor = new Color(100, 100, 100);
+
 
         public World(string filepath)
         {
@@ -324,6 +326,11 @@ namespace World_Of_Rectangle.Game
             {
                 Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Jewelry");
                 result = new PassableEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Jewelry"));
+            }
+            else if (color == KeyColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Key");
+                result = new PassableEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Key"));
             }
 
             return result;
