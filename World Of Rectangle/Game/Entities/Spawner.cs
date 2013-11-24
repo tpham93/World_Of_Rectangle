@@ -5,12 +5,15 @@ using System.Text;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
+
+using World_Of_Rectangle.Game.Entities.Enemies;
 
 namespace World_Of_Rectangle.Game.Entities
 {
     enum Enemies_1x1
     {
-
+        Ratte,
 
 
         Count,
@@ -93,13 +96,25 @@ namespace World_Of_Rectangle.Game.Entities
         float spawnRate;
         int possibilitieCount;
         Point[] sizes;
-        public static void Initialize()
+
+        Vector2 position;
+
+        static ContentManager content;
+
+        public Vector2 Position
         {
+            get { return position; }
+        }
+
+        public static void Initialize(ContentManager content)
+        {
+            Spawner.content = content;
             random = new Random();
         }
 
-        public Spawner(float spawnRate, Point[] sizes)
+        public Spawner(float spawnRate, Vector2 position, Point[] sizes)
         {
+            this.position = position;
             this.spawnRate = spawnRate;
             this.sizes = sizes;
             this.possibilitieCount = getPossibilityNumber(sizes);
@@ -129,7 +144,7 @@ namespace World_Of_Rectangle.Game.Entities
             return result;
         }
 
-        public static IEntity spawnEntity(Point[] sizes, int index)
+        public static IEntity spawnEntity(Point[] sizes, int index, Vector2 position)
         {
             for (int i = 0; i < sizes.Length; ++i)
             {
@@ -149,7 +164,7 @@ namespace World_Of_Rectangle.Game.Entities
                             }
                             else
                             {
-                                return spawnEntity(min, max, index);
+                                return spawnEntity(min, max,position, index);
                             }
                             break;
                         }
@@ -161,7 +176,7 @@ namespace World_Of_Rectangle.Game.Entities
             return null;
         }
 
-        public static IEntity spawnEntity(int x, int y, int index)
+        public static IEntity spawnEntity(int x, int y,Vector2 position, int index)
         {
             switch (x)
             {
@@ -169,25 +184,26 @@ namespace World_Of_Rectangle.Game.Entities
                     switch (y)
                     {
                         case 1:
-                            switch (index)
+                            switch ((Enemies_1x1)index)
                             {
-
+                                case Enemies_1x1.Ratte:
+                                    return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Rat"));
                             }
                             break;
                         case 2:
-                            switch (index)
+                            switch ((Enemies_1x2)index)
                             {
 
                             }
                             break;
                         case 3:
-                            switch (index)
+                            switch ((Enemies_1x3)index)
                             {
 
                             }
                             break;
                         case 4:
-                            switch (index)
+                            switch ((Enemies_1x4)index)
                             {
 
                             }
@@ -198,19 +214,19 @@ namespace World_Of_Rectangle.Game.Entities
                     switch (y)
                     {
                         case 2:
-                            switch (index)
+                            switch ((Enemies_2x2)index)
                             {
 
                             }
                             break;
                         case 3:
-                            switch (index)
+                            switch ((Enemies_2x3)index)
                             {
 
                             }
                             break;
                         case 4:
-                            switch (index)
+                            switch ((Enemies_2x3)index)
                             {
 
                             }
@@ -221,13 +237,13 @@ namespace World_Of_Rectangle.Game.Entities
                     switch (y)
                     {
                         case 3:
-                            switch (index)
+                            switch ((Enemies_3x3)index)
                             {
 
                             }
                             break;
                         case 4:
-                            switch (index)
+                            switch ((Enemies_3x4)index)
                             {
 
                             }
@@ -238,7 +254,7 @@ namespace World_Of_Rectangle.Game.Entities
                     switch (y)
                     {
                         case 4:
-                            switch (index)
+                            switch ((Enemies_4x4)index)
                             {
 
                             }
@@ -255,7 +271,7 @@ namespace World_Of_Rectangle.Game.Entities
             if (random.NextDouble() <= spawnRate)
             {
                 int index = random.Next(possibilitieCount);
-                return spawnEntity(sizes, index);
+                return spawnEntity(sizes, index, position);
             }
             return null;
         }

@@ -14,7 +14,6 @@ namespace World_Of_Rectangle.Gamestates
 
         public ActualGame()
         {
-
             world = new World(@"Maps\Castlemap.png");
         }
 
@@ -41,16 +40,7 @@ namespace World_Of_Rectangle.Gamestates
                 null,
                 null,
                 Matrix.CreateTranslation(-new Vector3(world.CamPosition, 0) + new Vector3(Global.REFERENCE_SCREENSIZE / 2, 0)) * Matrix.CreateScale(Global.scaleValues));
-            //spriteBatch.Begin(
-            //    SpriteSortMode.Immediate,
-            //    null,
-            //    null,
-            //    null,
-            //    null,
-            //    null,
-            //    Matrix.CreateTranslation(-new Vector3(world.CamPosition, 0) + new Vector3(Global.REFERENCE_SCREENSIZE / 2, 0)));
 
-            //player.Draw(gameTime, spriteBatch);
             world.Draw(gameTime, spriteBatch);
 
 

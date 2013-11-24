@@ -18,33 +18,13 @@ namespace World_Of_Rectangle.Game
     {
         static ContentManager content;
 
-        Player player;
-
-        List<IEntity> passebleEntities;
-        List<IEntity> solidEntities;
-
-        List<IEntity> enemies;
-
-        
-
         public Vector2 CamPosition
         {
-            get { return player.Position; }
-        }
-
-        public List<IEntity> PassebleEntities
-        {
-            get { return passebleEntities; }
-            set { passebleEntities = value; }
-        }
-        public List<IEntity> SolidEntities
-        {
-            get { return solidEntities; }
-            set { solidEntities = value; }
+            get { return EntityManager.Player.Position; }
         }
 
         //solid colours
-        readonly static Color WallColor = new Color(0,0,0);
+        readonly static Color WallColor = new Color(0, 0, 0);
         readonly static Color PillarColor = new Color(0, 255, 0);
         readonly static Color TreeColor = new Color(0, 230, 0);
         readonly static Color BushColor = new Color(0, 210, 0);
@@ -73,13 +53,13 @@ namespace World_Of_Rectangle.Game
         
 
 
+
         readonly static Color Door_1Color = new Color(255, 250, 0);
         readonly static Color Door_2Color = new Color(255, 230, 0);
         readonly static Color ChandelierColor = new Color(255, 210, 0);
         readonly static Color Chair_GroupColor = new Color(255, 190, 0);
         readonly static Color ChickenColor = new Color(255, 170, 0);
         readonly static Color BenchColor = new Color(255, 150, 0);
-        readonly static Color ToiletColor = new Color(255, 130, 0);
         readonly static Color BookColor = new Color(255, 110, 0);
         readonly static Color WebColor = new Color(255, 90, 0);
         readonly static Color MasterswordColor = new Color(255, 70, 0);
@@ -90,53 +70,53 @@ namespace World_Of_Rectangle.Game
 
         public World(string filepath)
         {
-            passebleEntities = new List<IEntity>();
-            solidEntities = new List<IEntity>();
-            enemies = new List<IEntity>();
-
             Texture2D map = sat.Etc.Helper.loadImage(filepath);
-            Color[] pixel = new Color[map.Width *  map.Height];
+            Color[] pixel = new Color[map.Width * map.Height];
             map.GetData<Color>(pixel);
 
             Vector2 startPoint = Vector2.Zero;
+            Spawner.Initialize(content);
+            EntityManager.Initialize(new Point(map.Width / 5, map.Height / 5), new Point(map.Width, map.Height), Vector2.Zero);
 
             for (int i = 0; i < pixel.Length; ++i)
             {
                 int x = i % map.Width;
                 int y = i / map.Width;
-                IEntity entity = colorToEntitiy(pixel[i], new Vector2(x,y) * Global.TILE_SIZE);
-                if (entity != null)
+                Color color = pixel[i];
+                if (color.B == 0 && color.G == 0 && color.R > 0)
                 {
-                    if (entity.Moveable)
+                    Spawner spawner = colorToSpawner(color, new Vector2(x, y) * Global.TILE_SIZE);
+                    if (spawner != null)
                     {
-                        passebleEntities.Add(entity);
-                    }
-                    else
-                    {
-                        solidEntities.Add(entity);
+                        EntityManager.addSpawnerToChunk(spawner);
                     }
                 }
                 else
                 {
-                    if (pixel[i] == new Color(0,0,255))
+
+                    IEntity entity = colorToEntitiy(color, new Vector2(x, y) * Global.TILE_SIZE);
+                    if (entity != null)
                     {
-                        startPoint = new Vector2(x,y)*Global.TILE_SIZE;
+                        if (entity.Moveable)
+                        {
+                            EntityManager.addPassableEntities(entity);
+                        }
+                        else
+                        {
+                            EntityManager.addSolidEntityToChunks(entity);
+                        }
+                    }
+                    else
+                    {
+                        if (pixel[i] == new Color(0, 0, 255))
+                        {
+                            startPoint = new Vector2(x, y) * Global.TILE_SIZE;
+                        }
                     }
                 }
             }
-
-
-            Keys[] keys = new Keys[(int)Player.ActionKeys.KeyCount];
-
-            keys[(int)Player.ActionKeys.MoveForward] = Keys.W;
-            keys[(int)Player.ActionKeys.MoveBackward] = Keys.S;
-            keys[(int)Player.ActionKeys.MoveLeft] = Keys.A;
-            keys[(int)Player.ActionKeys.MoveRight] = Keys.D;
-            keys[(int)Player.ActionKeys.Attack] = Keys.Space;
-            keys[(int)Player.ActionKeys.Inventory] = Keys.Escape;
-
-            player = new Player(startPoint, 0.0f, keys);
-
+            EntityManager.LoadContent(content);
+            EntityManager.Player.Position = startPoint;
         }
 
         public static void Initialize(ContentManager content)
@@ -146,7 +126,6 @@ namespace World_Of_Rectangle.Game
 
         public void LoadContent(Microsoft.Xna.Framework.Content.ContentManager content)
         {
-            player.LoadContent(content);
         }
 
         private static IEntity colorToEntitiy(Color color, Vector2 position)
@@ -155,7 +134,8 @@ namespace World_Of_Rectangle.Game
             if (color.A == 0)
             {
                 return null;
-            } else if (color == WallColor)
+            }
+            else if (color == WallColor)
             {
                 Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Wall");
                 result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Wall"));
@@ -315,11 +295,6 @@ namespace World_Of_Rectangle.Game
                 Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Bench");
                 result = new PassableEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Bench"));
             }
-            else if (color == ToiletColor)
-            {
-                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Toilet");
-                result = new PassableEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Toilet"));
-            }
             else if (color == BookColor)
             {
                 Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Book");
@@ -355,73 +330,28 @@ namespace World_Of_Rectangle.Game
 
         }
 
+        private static Spawner colorToSpawner(Color color, Vector2 position)
+        {
+            Spawner result = null;
+            if (color.R == 250)
+            {
+                result = new Spawner(0.01f,position,new Point[]{new Point(1,1)});
+            }
+            return result;
+
+        }
+
         public void Update(GameTime gameTime)
         {
-            player.Update(gameTime);
 
-            for (int i = 0; i < enemies.Count; ++i)
-            {
-                enemies[i].Update(gameTime);
-
-                IntersectData intersectData = enemies[i].Shape.intersects(player.Shape);
-
-                if (intersectData.Intersects)
-                {
-                    enemies[i].Position -= intersectData.Mtv * intersectData.Distance / 2;
-                    player.Position += intersectData.Mtv * intersectData.Distance / 2;
-                    player.receiveDamageFrom(enemies[i]);
-                }
-                if (player.isAttacking)
-                {
-                    intersectData = enemies[i].Shape.intersects(player.Weapon.Shape);
-                    if (intersectData.Intersects)
-                    {
-                        enemies[i].receiveDamageFrom(player.Weapon);
-                    }
-                }
-            }
-
-            for (int i = 0; i < enemies.Count; ++i)
-            {
-                for (int j = 0; j < enemies.Count; ++j)
-                {
-                    IntersectData intersectData = enemies[i].Shape.intersects(enemies[j].Shape);
-
-                    if (intersectData.Intersects)
-                    {
-                        enemies[i].Position -= intersectData.Mtv * intersectData.Distance / 2;
-                        enemies[j].Position += intersectData.Mtv * intersectData.Distance / 2;
-                    }
-                }
-            }
-
-            for (int i = 0; i < solidEntities.Count; ++i)
-            {
-                solidEntities[i].Update(gameTime);
-
-                IntersectData intersectData = solidEntities[i].Shape.intersects(player.Shape);
-
-                if (intersectData.Intersects)
-                {
-                    player.Position += intersectData.Mtv * intersectData.Distance;
-                }
-            }
-
+            EntityManager.Update(gameTime);
 
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            player.Draw(gameTime,spriteBatch);
 
-            for (int i = 0; i < passebleEntities.Count; ++i)
-            {
-                passebleEntities[i].Draw(gameTime, spriteBatch);
-            }
-            for (int i = 0; i < solidEntities.Count; ++i)
-            {
-                solidEntities[i].Draw(gameTime, spriteBatch);
-            }
+            EntityManager.Draw(gameTime, spriteBatch);
         }
 
 
