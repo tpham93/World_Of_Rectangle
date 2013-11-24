@@ -31,12 +31,23 @@ namespace World_Of_Rectangle.Game.Entities
         protected const float MOVESPEED_PS = 500.0f;
         protected TimeSpan attackCooldown;
         protected int sp;
+        private IWeapon weapon;
 
-        protected IWeapon weapon;
+
+
+        public IWeapon Weapon
+        {
+            get { return weapon; }
+        }
 
         protected bool CanAttack
         {
             get { return attackCooldown < TimeSpan.Zero /*&& weapon != null && weapon.SP_Cost < SP*/; }
+        }
+
+        public bool isAttacking
+        {
+            get { return weapon.Attacking; }
         }
 
         public Player(Vector2 position, float rotation, Keys[] keys)
@@ -55,7 +66,7 @@ namespace World_Of_Rectangle.Game.Entities
             Texture = content.Load<Texture2D>(@"player");
             Vector2 size = new Vector2(Texture.Width, Texture.Height);
             TextureOrigin = size / 2f;
-            Shape = new EdgeShape(EdgeShape.genCorners(size), size, Position);
+            Shape = new RectangleShape(new Rectangle(0,0,(int)size.X,(int)size.Y), Position);
             weapon = new Sword(Position, Rotation, false, 20f, float.PositiveInfinity);
             weapon.LoadContent(content);
         }

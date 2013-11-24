@@ -8,6 +8,7 @@ namespace sat.Shape
     enum EShapeType
     {
         EdgeShape,
+        RectangleShape,
         CircleShape
     }
 }

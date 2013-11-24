@@ -7,6 +7,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
+using World_Of_Rectangle.Game.Entities.Weapons;
+
 using sat.Etc;
 using sat.Shape;
 
@@ -29,7 +31,7 @@ namespace World_Of_Rectangle.Game.Entities
     abstract class IEntity
     {
 
-        private EdgeShape shape;
+        private Shape2D shape;
         private Texture2D texture;
         private Vector2 textureOrigin;
         private Vector2 position;
@@ -39,25 +41,12 @@ namespace World_Of_Rectangle.Game.Entities
         private bool moveable;
         private Team team;
 
-        private Texture2D shapeTexture;
-
-
-        private Vector2[] corners;
-
-        public EdgeShape Shape
+        public Shape2D Shape
         {
             get { return shape; }
             set
             {
                 shape = value;
-                corners = new Vector2[4];
-
-                for (int i = 0; i < 4; ++i)
-                {
-                    corners[i] = shape.Corners[i] + shape.MiddlePoint;
-                }
-
-                shapeTexture = EdgeShape.genTexture(corners, corners[0] + new Vector2(1), texture.Width, texture.Height, Color.Red);
             }
         }
         public Texture2D Texture
@@ -93,6 +82,10 @@ namespace World_Of_Rectangle.Game.Entities
             get { return hp; }
             set { hp = value; }
         }
+        public bool stillLiving
+        {
+            get { return hp > 0; }
+        }
         public bool Moveable
         {
             get { return moveable; }
@@ -116,18 +109,21 @@ namespace World_Of_Rectangle.Game.Entities
             this.team = team;
         }
 
-        //static Texture2D pixel = Helper.genRectangle(1, 1, Color.Green, Color.Green);
+        public virtual void receiveDamageFrom(IEntity entity)
+        {
+            hp -= entity.contactDamage;
+        }
+
+        public virtual void receiveDamageFrom(IWeapon weapon)
+        {
+            hp -= weapon.ContactDamage;
+        }
+
         public abstract void LoadContent(ContentManager content);
         public abstract Action Update(GameTime gameTime);
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            //spriteBatch.Draw(shapeTexture, shape.Position, null, Color.White, shape.Rotation, shape.MiddlePoint, 1, SpriteEffects.None, 0);
-            spriteBatch.Draw(texture, shape.Position, null, Color.White, Rotation, textureOrigin, 1, SpriteEffects.None, 0);
-
-            //for (int i = 0; i < shape.CurrentCorners.Length; ++i)
-            {
-                //spriteBatch.Draw(pixel, shape.CurrentCorners[i], null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
-            }
+            spriteBatch.Draw(texture, Position, null, Color.White, Rotation, textureOrigin, 1, SpriteEffects.None, 0);
         }
     }
 }

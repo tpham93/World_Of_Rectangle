@@ -15,8 +15,6 @@ namespace World_Of_Rectangle.Game.Entities.Weapons
     {
         protected bool attacking;
 
-
-
         private Shape2D shape;
         private Texture2D texture;
         private Vector2 textureOrigin;
@@ -78,6 +76,10 @@ namespace World_Of_Rectangle.Game.Entities.Weapons
                 moveable = value;
                 shape.Moveable = value;
             }
+        }
+        public float ContactDamage
+        {
+            get { return contactDamage; }
         }
 
 

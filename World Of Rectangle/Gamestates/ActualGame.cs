@@ -25,14 +25,6 @@ namespace World_Of_Rectangle.Gamestates
 
         public EGameStates Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            //Action playerAction =  player.Update(gameTime);
-
-            //switch (playerAction)
-            //{
-            //    case Action.Inventory:
-            //        return EGameStates.Inventory;
-            //}
-
             world.Update(gameTime);
 
             return EGameStates.Game;

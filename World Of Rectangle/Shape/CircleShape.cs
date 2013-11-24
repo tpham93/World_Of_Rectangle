@@ -95,6 +95,23 @@ namespace sat.Shape
         }
 
         /// <summary>
+        /// checks if the object is intersecting with another EdgeObject
+        /// </summary>
+        /// <param name="o">EdgeObject which is to be checked for an intersection</param>
+        /// <returns>true if it intersects</returns>
+        public override IntersectData intersects(RectangleShape o)
+        {
+            IntersectData intersectData = o.intersects(this);
+            if (intersectData.Intersects)
+            {
+
+                return intersectData;
+
+            }
+            else return new IntersectData();
+        }
+
+        /// <summary>
         /// checks if the object is intersecting with another CircleObject
         /// </summary>
         /// <param name="o">CircleObject which is to be checked for an intersection</param>

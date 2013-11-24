@@ -30,6 +30,12 @@ namespace sat.Shape
         List<Vector2> normals;
         List<Vector2> currentNormals;
 
+        public List<Vector2> CurrentNormals
+        {
+            get { return currentNormals; }
+            set { currentNormals = value; }
+        }
+
         /// <summary>
         /// gets the ObjectType
         /// </summary>
@@ -181,6 +187,66 @@ namespace sat.Shape
 
             }
             foreach (Vector2 n in o.currentNormals)
+            {
+                Vector2 possibleMtv = n;
+
+                Range r1 = getProjectionRange(possibleMtv);
+                Range r2 = o.getProjectionRange(possibleMtv);
+
+                float distance = Range.distance(r1, r2);
+
+                if (distance >= 0)
+                {
+                    return new IntersectData();
+                }
+                else if (mtv.length > -distance)
+                {
+                    mtv.length = -distance;
+                    mtv.direction = possibleMtv;
+                }
+            }
+
+
+            if (Vector2.Dot(mtv.direction, o.Position - Position) < 0)
+            {
+                mtv.direction *= -1.0f;
+            }
+
+            return new IntersectData(mtv);
+        }
+
+
+        /// <summary>
+        /// checks if the object is intersecting with another CircleObject
+        /// </summary>
+        /// <param name="o">EdgeObject which is to be checked for an intersection</param>
+        /// <returns>true if it intersects</returns>
+        public override IntersectData intersects(RectangleShape o)
+        {
+            VectorData mtv = new VectorData();
+            mtv.length = float.PositiveInfinity;
+
+            foreach (Vector2 n in currentNormals)
+            {
+                Vector2 possibleMtv = n;
+
+                Range r1 = getProjectionRange(possibleMtv);
+                Range r2 = o.getProjectionRange(possibleMtv);
+
+                float distance = Range.distance(r1, r2);
+
+                if (distance >= 0)
+                {
+                    return new IntersectData();
+                }
+                else if (mtv.length > -distance)
+                {
+                    mtv.length = -distance;
+                    mtv.direction = possibleMtv;
+                }
+
+            }
+            foreach (Vector2 n in o.CurrentNormals)
             {
                 Vector2 possibleMtv = n;
 
