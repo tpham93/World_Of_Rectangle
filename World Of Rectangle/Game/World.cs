@@ -318,7 +318,7 @@ namespace World_Of_Rectangle.Game
             else if (color == Door_BossColor)
             {
                 Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Door_Boss");
-                result = new PassableEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Door_Boss"));
+                result = new BossDoor(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Door_Boss"));
             }
             else if (color == JewelryColor)
             {

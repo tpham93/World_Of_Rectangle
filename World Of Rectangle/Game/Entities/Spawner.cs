@@ -49,7 +49,7 @@ namespace World_Of_Rectangle.Game.Entities
         Vampire,
         Werewolf,
 
-       // Skeletton,Bandit,DarkElve,DarkKnight, Elve,Gnoll,Hobgoblin,Lich,Orc,Vampire,Werewolf,
+        // Skeletton,Bandit,DarkElve,DarkKnight, Elve,Gnoll,Hobgoblin,Lich,Orc,Vampire,Werewolf,
 
 
         Count,
@@ -81,7 +81,7 @@ namespace World_Of_Rectangle.Game.Entities
         Wolf,
         Zombiehound,
 
-//Zombie,Mummy,Ghul,Bear,Basilisk,Ghostwolf,Warg,Wolf,Zombiehound,
+        //Zombie,Mummy,Ghul,Bear,Basilisk,Ghostwolf,Warg,Wolf,Zombiehound,
 
 
 
@@ -138,6 +138,8 @@ namespace World_Of_Rectangle.Game.Entities
 
         static ContentManager content;
 
+        IEntity spawnedEnemy;
+
         public Vector2 Position
         {
             get { return position; }
@@ -155,6 +157,7 @@ namespace World_Of_Rectangle.Game.Entities
             this.spawnRate = spawnRate;
             this.sizes = sizes;
             this.possibilitieCount = getPossibilityNumber(sizes);
+            spawnedEnemy = null;
         }
 
         private static int getPossibilityNumber(Point[] sizes)
@@ -201,7 +204,7 @@ namespace World_Of_Rectangle.Game.Entities
                             }
                             else
                             {
-                                return spawnEntity(min, max,position, index);
+                                return spawnEntity(min, max, position, index);
                             }
                             break;
                         }
@@ -213,7 +216,7 @@ namespace World_Of_Rectangle.Game.Entities
             return null;
         }
 
-        public static IEntity spawnEntity(int x, int y,Vector2 position, int index)
+        public static IEntity spawnEntity(int x, int y, Vector2 position, int index)
         {
             switch (x)
             {
@@ -244,7 +247,7 @@ namespace World_Of_Rectangle.Game.Entities
                                     return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Creature"));
                                 case Enemies_1x2.Goblin:
                                     return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Goblin"));
-                           
+
                             }
                             break;
                         case 3:
@@ -362,10 +365,21 @@ namespace World_Of_Rectangle.Game.Entities
 
         public IEntity Update(GameTime gameTime)
         {
-            if (random.NextDouble() <= spawnRate)
+            if (spawnedEnemy == null)
             {
-                int index = random.Next(possibilitieCount);
-                return spawnEntity(sizes, index, position);
+                if (random.NextDouble() <= spawnRate)
+                {
+                    int index = random.Next(possibilitieCount);
+                    spawnedEnemy =  spawnEntity(sizes, index, position);
+                    return spawnedEnemy;
+                }
+            }
+            else
+            {
+                if(!spawnedEnemy.stillLiving)
+                {
+                    spawnedEnemy = null;
+                }
             }
             return null;
         }

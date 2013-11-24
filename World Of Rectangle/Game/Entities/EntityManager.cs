@@ -148,8 +148,6 @@ namespace World_Of_Rectangle.Game.Entities
 
         public static void Update(GameTime gameTime)
         {
-            //Queue<IEntity> deadEnemies = new Queue<IEntity>();
-
             HashSet<IEntity> deadEnemies = new HashSet<IEntity>();
 
             player.Update(gameTime);
@@ -163,26 +161,32 @@ namespace World_Of_Rectangle.Game.Entities
 
             foreach (Chunk chunk in map)
             {
-                foreach (Spawner spawner in chunk.Spawner)
-                {
-                    IEntity entity = spawner.Update(gameTime);
-                    if (entity != null)
-                    {
-                        addEnemy(entity);
-                    }
-                }
-                
                 List<IEntity> chunkEnemies = chunk.Enemies;
                 List<IEntity> chunkSolidEntities = chunk.SolidEntities;
+                List<IEntity> chunkPassableEntities = chunk.PassableEntities;
 
                 if (chunk.HasPlayer)
                 {
-                    foreach (IEntity solidEntity in chunkSolidEntities)
+                    foreach (SolidEntities solidEntity in chunkSolidEntities)
                     {
-                        IntersectData intersectData = solidEntity.Shape.intersects(player.Shape);
-                        if (intersectData.Intersects)
+                        if (!solidEntity.canPass(player))
                         {
-                            player.Position += intersectData.Mtv * intersectData.Distance;
+                            IntersectData intersectData = solidEntity.Shape.intersects(player.Shape);
+                            if (intersectData.Intersects)
+                            {
+                                player.Position += intersectData.Mtv * intersectData.Distance;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (Spawner spawner in chunk.Spawner)
+                    {
+                        IEntity entity = spawner.Update(gameTime);
+                        if (entity != null)
+                        {
+                            addEnemy(entity);
                         }
                     }
                 }
@@ -197,13 +201,20 @@ namespace World_Of_Rectangle.Game.Entities
                         if (intersectData.Intersects)
                         {
                             enemy1.Position -= intersectData.Mtv * intersectData.Distance;
-                            solidEntity.Position += intersectData.Mtv * intersectData.Distance;
+                            //solidEntity.Position += intersectData.Mtv * intersectData.Distance;
+                        }
+                    }
+                    foreach (PassableEntities passableEntities in chunkPassableEntities)
+                    {
+                        IntersectData intersectData = enemy1.Shape.intersects(passableEntities.Shape);
+                        if (intersectData.Intersects)
+                        {
+                            enemy1.Position -= intersectData.Mtv * intersectData.Distance;
                         }
                     }
 
                     if (chunk.HasPlayer)
                     {
-
                         IntersectData intersectData = enemy1.Shape.intersects(player.Shape);
                         if (intersectData.Intersects)
                         {
@@ -227,9 +238,9 @@ namespace World_Of_Rectangle.Game.Entities
 
                     for (int j = 0; j < chunkEnemies.Count; ++j)
                     {
-                        if (j != 0)
+                        if (j != i)
                         {
-                            IEntity enemy2 = chunkEnemies[i];
+                            IEntity enemy2 = chunkEnemies[j];
                             IntersectData intersectData = enemy1.Shape.intersects(enemy2.Shape);
                             if (intersectData.Intersects)
                             {
@@ -293,6 +304,11 @@ namespace World_Of_Rectangle.Game.Entities
         }
         public static void addPassableEntities(IEntity passableEntity)
         {
+            List<Chunk> chunks = getChunk(passableEntity);
+            foreach (Chunk chunk in chunks)
+            {
+                chunk.PassableEntities.Add(passableEntity);
+            }
             passableEntities.Add(passableEntity);
         }
 

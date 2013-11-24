@@ -21,6 +21,16 @@ namespace World_Of_Rectangle.Game.Entities
             TextureOrigin = new Vector2(texture.Width/2,texture.Height/2);
         }
 
+        public virtual bool canPass(IEntity entity)
+        {
+            return false;
+        }
+
+        public virtual bool canPass(Player player)
+        {
+            return false;
+        }
+        
         public override void LoadContent(Microsoft.Xna.Framework.Content.ContentManager content)
         {
         }

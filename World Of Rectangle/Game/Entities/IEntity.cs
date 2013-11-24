@@ -14,7 +14,8 @@ using sat.Shape;
 
 namespace World_Of_Rectangle.Game.Entities
 {
-    enum Action
+    
+    public enum Action
     {
         Nothing,
         Attack,
@@ -22,7 +23,7 @@ namespace World_Of_Rectangle.Game.Entities
         Die
     }
 
-    enum Team
+    public enum Team
     {
         Good,
         Evil,
@@ -42,6 +43,10 @@ namespace World_Of_Rectangle.Game.Entities
         private bool moveable;
         private Team team;
 
+        public Team Team
+        {
+            get { return team; }
+        }
         public Shape2D Shape
         {
             get { return shape; }

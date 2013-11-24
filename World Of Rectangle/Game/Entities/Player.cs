@@ -33,7 +33,13 @@ namespace World_Of_Rectangle.Game.Entities
         protected int sp;
         private IWeapon weapon;
 
+        private int keyNumber;
 
+        public int KeyNumber
+        {
+            get { return keyNumber; }
+            set { keyNumber = value; }
+        }
 
         public IWeapon Weapon
         {
@@ -51,7 +57,7 @@ namespace World_Of_Rectangle.Game.Entities
         }
 
         public Player(Vector2 position, float rotation, Keys[] keys)
-            : base(position, rotation, false, 0, 100)
+            : base(position, rotation, false, 0, float.PositiveInfinity)
         {
             if (keys.Length != (int)ActionKeys.KeyCount)
             {
