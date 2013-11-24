@@ -54,6 +54,10 @@ namespace World_Of_Rectangle.Game
         readonly static Color BasketColor = new Color(0, 130, 0);
         readonly static Color Table_4x4Color = new Color(0, 110, 0);
         readonly static Color Table_GiantColor = new Color(0, 90, 0);
+        readonly static Color Door_brokenColor = new Color(0, 70, 0);
+        readonly static Color Bed_LargeColor = new Color(0, 50, 0);
+        readonly static Color BedColor = new Color(0, 30, 0);
+        readonly static Color ObstacleColor = new Color(0, 10, 0);
         
 
 
@@ -63,6 +67,7 @@ namespace World_Of_Rectangle.Game
         readonly static Color Chair_GroupColor = new Color(255, 190, 0);
         readonly static Color ChickenColor = new Color(255, 170, 0);
         readonly static Color BenchColor = new Color(255, 150, 0);
+        readonly static Color ToiletColor = new Color(255, 130, 0);
 
 
         public World(string filepath)
@@ -182,6 +187,29 @@ namespace World_Of_Rectangle.Game
                 Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Table_Giant");
                 result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Table_Giant"));
             }
+            else if (color == Door_brokenColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Door_broken");
+                result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Door_broken"));
+            }
+            else if (color == Bed_LargeColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Bed_Large");
+                result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Bed_Large"));
+            }
+            else if (color == BedColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Bed");
+                result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Bed"));
+            }
+            else if (color == ObstacleColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Obstacle");
+                result = new SolidEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Obstacle"));
+            }
+            
+            
+            
 
             //Passable objects
             else if (color == Door_1Color)
@@ -213,6 +241,11 @@ namespace World_Of_Rectangle.Game
             {
                 Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Bench");
                 result = new PassableEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Bench"));
+            }
+            else if (color == ToiletColor)
+            {
+                Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Toilet");
+                result = new PassableEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Toilet"));
             }
 
             return result;
