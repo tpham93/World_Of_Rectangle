@@ -13,6 +13,7 @@ namespace World_Of_Rectangle.Game.Entities.Enemies
 {
     class BasicEnemy : IEntity
     {
+        static Random random = new Random();
         float radius;
 
         public BasicEnemy(Vector2 position, float contactDamage, float hp, float sightRadius, Texture2D texture)
@@ -30,8 +31,11 @@ namespace World_Of_Rectangle.Game.Entities.Enemies
 
         public override Action Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            
+            Vector2 moveVector = new Vector2((float)random.NextDouble() - 0.5f, (float)random.NextDouble() - 0.5f);
+            //Vector2 moveVector = new Vector2((float)random.NextDouble(), (float)random.NextDouble());
+            moveVector.Normalize();
 
+            Position += moveVector * 5;
             return Action.Nothing;
         }
     }

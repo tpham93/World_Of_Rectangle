@@ -73,7 +73,7 @@ namespace World_Of_Rectangle.Game
             map.GetData<Color>(pixel);
 
             Vector2 startPoint = Vector2.Zero;
-
+            Spawner.Initialize(content);
             EntityManager.Initialize(new Point(map.Width / 5, map.Height / 5), new Point(map.Width, map.Height), Vector2.Zero);
 
             for (int i = 0; i < pixel.Length; ++i)
@@ -84,7 +84,10 @@ namespace World_Of_Rectangle.Game
                 if (color.B == 0 && color.G == 0 && color.R > 0)
                 {
                     Spawner spawner = colorToSpawner(color, new Vector2(x, y) * Global.TILE_SIZE);
-                    EntityManager.addSpawnerToChunk(spawner);
+                    if (spawner != null)
+                    {
+                        EntityManager.addSpawnerToChunk(spawner);
+                    }
                 }
                 else
                 {
@@ -318,9 +321,9 @@ namespace World_Of_Rectangle.Game
         private static Spawner colorToSpawner(Color color, Vector2 position)
         {
             Spawner result = null;
-            if (color.R == 255)
+            if (color.R == 250)
             {
-                result = new Spawner(1,new Point[]{new Point(1,1)});
+                result = new Spawner(0.01f,position,new Point[]{new Point(1,1)});
             }
             return result;
 
