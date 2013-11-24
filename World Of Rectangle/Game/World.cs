@@ -337,6 +337,31 @@ namespace World_Of_Rectangle.Game
             {
                 result = new Spawner(0.01f,position,new Point[]{new Point(1,1)});
             }
+            if (color.R == 230)
+            {
+                result = new Spawner(0.01f, position, new Point[] { new Point(1, 2) });
+            }
+            if (color.R == 210)
+            {
+                result = new Spawner(0.01f, position, new Point[] { new Point(1, 3) });
+            }
+            if (color.R == 190)
+            {
+                result = new Spawner(0.01f, position, new Point[] { new Point(2, 2) });
+            }
+            if (color.R == 170)
+            {
+                result = new Spawner(0.01f, position, new Point[] { new Point(2, 3) });
+            }
+            if (color.R == 90)
+            {
+                result = new Spawner(0.01f, position, new Point[] { new Point(3, 4) });
+            }
+            if (color.R == 70)
+            {
+                result = new Spawner(0.01f, position, new Point[] { new Point(4, 4) });
+            }
+
             return result;
 
         }

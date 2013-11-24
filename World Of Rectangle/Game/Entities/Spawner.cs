@@ -106,7 +106,7 @@ namespace World_Of_Rectangle.Game.Entities
     }
     enum Enemies_3x4
     {
-
+        Glitch,
 
 
         Count,
@@ -340,7 +340,8 @@ namespace World_Of_Rectangle.Game.Entities
                         case 4:
                             switch ((Enemies_3x4)index)
                             {
-
+                                case Enemies_3x4.Glitch:
+                                    return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Glitch"));
                             }
                             break;
                     }
