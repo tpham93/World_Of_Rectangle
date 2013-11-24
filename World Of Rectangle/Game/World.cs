@@ -78,7 +78,7 @@ namespace World_Of_Rectangle.Game
 
             Vector2 startPoint = Vector2.Zero;
             Spawner.Initialize(content);
-            EntityManager.Initialize(new Point(map.Width / 5, map.Height / 5), new Point(map.Width, map.Height), Vector2.Zero);
+            EntityManager.Initialize(new Point(map.Width / 10, map.Height / 5), new Point(map.Width, map.Height), Vector2.Zero);
 
             for (int i = 0; i < pixel.Length; ++i)
             {
