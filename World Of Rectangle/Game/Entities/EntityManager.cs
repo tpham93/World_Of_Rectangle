@@ -113,11 +113,20 @@ namespace World_Of_Rectangle.Game.Entities
         private static Point chunkSize;
         private static Chunk[,] map;
 
+        private static List<PassableEntities> keyShapes;
+
+        public static List<PassableEntities> KeyPositions
+        {
+            get { return keyShapes; }
+            set { keyShapes = value; }
+        }
+
         public static void Initialize(Point chunkSize, Point mapSize, Vector2 startPosition)
         {
             passableEntities = new List<IEntity>();
             solidEntities = new List<IEntity>();
             enemies = new List<IEntity>();
+            keyShapes = new List<PassableEntities>();
             EntityManager.chunkSize = chunkSize;
             map = new Chunk[(int)Math.Ceiling(mapSize.X / (float)chunkSize.X), (int)Math.Ceiling(mapSize.Y / (float)chunkSize.Y)];
             for (int x = 0; x <= map.GetUpperBound(0); ++x)
@@ -190,66 +199,82 @@ namespace World_Of_Rectangle.Game.Entities
                         }
                     }
                 }
-
-                for (int i = 0; i < chunkEnemies.Count; ++i)
+                if (chunk.HasPlayer)
                 {
-                    IEntity enemy1 = chunkEnemies[i];
+                    for (int i = 0; i < chunkEnemies.Count; ++i)
+                    {
+                        IEntity enemy1 = chunkEnemies[i];
 
-                    foreach (IEntity solidEntity in chunkSolidEntities)
-                    {
-                        IntersectData intersectData = enemy1.Shape.intersects(solidEntity.Shape);
-                        if (intersectData.Intersects)
+                        foreach (IEntity solidEntity in chunkSolidEntities)
                         {
-                            enemy1.Position -= intersectData.Mtv * intersectData.Distance;
-                            //solidEntity.Position += intersectData.Mtv * intersectData.Distance;
-                        }
-                    }
-                    foreach (PassableEntities passableEntities in chunkPassableEntities)
-                    {
-                        IntersectData intersectData = enemy1.Shape.intersects(passableEntities.Shape);
-                        if (intersectData.Intersects)
-                        {
-                            enemy1.Position -= intersectData.Mtv * intersectData.Distance;
-                        }
-                    }
-
-                    if (chunk.HasPlayer)
-                    {
-                        IntersectData intersectData = enemy1.Shape.intersects(player.Shape);
-                        if (intersectData.Intersects)
-                        {
-                            enemy1.Position -= intersectData.Mtv * intersectData.Distance / 2;
-                            player.Position += intersectData.Mtv * intersectData.Distance / 2;
-                            player.receiveDamageFrom(enemy1);
-                        }
-                        if (player.isAttacking)
-                        {
-                            intersectData = enemy1.Shape.intersects(player.Weapon.Shape);
+                            IntersectData intersectData = enemy1.Shape.intersects(solidEntity.Shape);
                             if (intersectData.Intersects)
                             {
-                                enemy1.receiveDamageFrom(player.Weapon);
-                                if (!enemy1.stillLiving)
+                                enemy1.Position -= intersectData.Mtv * intersectData.Distance;
+                                //solidEntity.Position += intersectData.Mtv * intersectData.Distance;
+                            }
+                        }
+                        foreach (PassableEntities passableEntities in chunkPassableEntities)
+                        {
+                            IntersectData intersectData = enemy1.Shape.intersects(passableEntities.Shape);
+                            if (intersectData.Intersects)
+                            {
+                                enemy1.Position -= intersectData.Mtv * intersectData.Distance;
+                            }
+                        }
+
+                        if (chunk.HasPlayer)
+                        {
+                            IntersectData intersectData = enemy1.Shape.intersects(player.Shape);
+                            if (intersectData.Intersects)
+                            {
+                                enemy1.Position -= intersectData.Mtv * intersectData.Distance / 2;
+                                player.Position += intersectData.Mtv * intersectData.Distance / 2;
+                                player.receiveDamageFrom(enemy1);
+                            }
+                            if (player.isAttacking)
+                            {
+                                intersectData = enemy1.Shape.intersects(player.Weapon.Shape);
+                                if (intersectData.Intersects)
                                 {
-                                    deadEnemies.Add(enemy1);
+                                    enemy1.receiveDamageFrom(player.Weapon);
+                                    if (!enemy1.stillLiving)
+                                    {
+                                        deadEnemies.Add(enemy1);
+                                    }
+                                }
+                            }
+                        }
+
+                        for (int j = 0; j < chunkEnemies.Count; ++j)
+                        {
+                            if (j != i)
+                            {
+                                IEntity enemy2 = chunkEnemies[j];
+                                IntersectData intersectData = enemy1.Shape.intersects(enemy2.Shape);
+                                if (intersectData.Intersects)
+                                {
+                                    enemy1.Position -= intersectData.Mtv * intersectData.Distance / 2;
+                                    enemy2.Position += intersectData.Mtv * intersectData.Distance / 2;
                                 }
                             }
                         }
                     }
-
-                    for (int j = 0; j < chunkEnemies.Count; ++j)
-                    {
-                        if (j != i)
-                        {
-                            IEntity enemy2 = chunkEnemies[j];
-                            IntersectData intersectData = enemy1.Shape.intersects(enemy2.Shape);
-                            if (intersectData.Intersects)
-                            {
-                                enemy1.Position -= intersectData.Mtv * intersectData.Distance / 2;
-                                enemy2.Position += intersectData.Mtv * intersectData.Distance / 2;
-                            }
-                        }
-                    }
                 }
+            }
+            PassableEntities keyDeleted = null;
+            for (int i = 0; i < keyShapes.Count; ++i)
+            {
+                if (player.Shape.intersects(keyShapes[i].Shape).Intersects)
+                {
+                    keyDeleted = keyShapes[i];
+                }
+            }
+            if (keyDeleted !=null)
+            {
+                keyShapes.Remove(keyDeleted);
+                passableEntities.Remove(keyDeleted);
+                player.KeyNumber++;
             }
 
             for (int x = 0; x < map.GetUpperBound(0); ++x)
@@ -264,6 +289,9 @@ namespace World_Of_Rectangle.Game.Entities
             {
                 enemies.Remove(deadEnemy);
             }
+
+            Console.Out.WriteLine(player.KeyNumber);
+
         }
 
         public static void addSpawnerToChunk(Spawner spawner)

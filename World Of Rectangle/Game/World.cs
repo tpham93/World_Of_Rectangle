@@ -331,6 +331,7 @@ namespace World_Of_Rectangle.Game
             {
                 Texture2D texture = content.Load<Texture2D>(@"Levelgrafiken PNG\Key");
                 result = new PassableEntities(position + new Vector2(texture.Width / 2, texture.Height / 2), content.Load<Texture2D>(@"Levelgrafiken PNG\Key"));
+                EntityManager.KeyPositions.Add((PassableEntities)result);
             }
 
             return result;
