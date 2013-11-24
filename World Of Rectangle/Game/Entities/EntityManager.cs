@@ -204,14 +204,12 @@ namespace World_Of_Rectangle.Game.Entities
                     for (int i = 0; i < chunkEnemies.Count; ++i)
                     {
                         IEntity enemy1 = chunkEnemies[i];
-
                         foreach (IEntity solidEntity in chunkSolidEntities)
                         {
                             IntersectData intersectData = enemy1.Shape.intersects(solidEntity.Shape);
                             if (intersectData.Intersects)
                             {
                                 enemy1.Position -= intersectData.Mtv * intersectData.Distance;
-                                //solidEntity.Position += intersectData.Mtv * intersectData.Distance;
                             }
                         }
                         foreach (PassableEntities passableEntities in chunkPassableEntities)
@@ -270,16 +268,16 @@ namespace World_Of_Rectangle.Game.Entities
                     keyDeleted = keyShapes[i];
                 }
             }
-            if (keyDeleted !=null)
+            if (keyDeleted != null)
             {
                 keyShapes.Remove(keyDeleted);
                 passableEntities.Remove(keyDeleted);
                 player.KeyNumber++;
             }
 
-            for (int x = 0; x < map.GetUpperBound(0); ++x)
+            for (int x = 0; x <= map.GetUpperBound(0); ++x)
             {
-                for (int y = 0; y < map.GetUpperBound(1); ++y)
+                for (int y = 0; y <= map.GetUpperBound(1); ++y)
                 {
                     Chunk chunk = map[x, y];
                     chunk.Reset();
@@ -289,8 +287,6 @@ namespace World_Of_Rectangle.Game.Entities
             {
                 enemies.Remove(deadEnemy);
             }
-
-            Console.Out.WriteLine(player.KeyNumber);
 
         }
 

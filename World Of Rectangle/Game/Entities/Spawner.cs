@@ -227,26 +227,26 @@ namespace World_Of_Rectangle.Game.Entities
                             switch ((Enemies_1x1)index)
                             {
                                 case Enemies_1x1.Rat:
-                                    return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Rat"));
+                                    return new BasicEnemy(position, 10, 10, 1500, content.Load<Texture2D>(@"Enemies\E_Rat"));
                                 case Enemies_1x1.Imp:
-                                    return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Imp"));
+                                    return new BasicEnemy(position, 10, 10, 1500, content.Load<Texture2D>(@"Enemies\E_Imp"));
                                 case Enemies_1x1.Kobold:
-                                    return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Kobold"));
+                                    return new BasicEnemy(position, 10, 10, 1500, content.Load<Texture2D>(@"Enemies\E_Kobold"));
                                 case Enemies_1x1.Pixy:
-                                    return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Pixy"));
+                                    return new BasicEnemy(position, 10, 10, 1500, content.Load<Texture2D>(@"Enemies\E_Pixy"));
                                 case Enemies_1x1.Irrlicht:
-                                    return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Irrlicht"));
+                                    return new BasicEnemy(position, 10, 10, 1500, content.Load<Texture2D>(@"Enemies\E_Irrlicht"));
                             }
                             break;
                         case 2:
                             switch ((Enemies_1x2)index)
                             {
                                 case Enemies_1x2.Dwarf:
-                                    return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Dwarf"));
+                                    return new BasicEnemy(position, 15, 40, 1500, content.Load<Texture2D>(@"Enemies\E_Dwarf"));
                                 case Enemies_1x2.Creature:
-                                    return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Creature"));
+                                    return new BasicEnemy(position, 15, 40, 1500, content.Load<Texture2D>(@"Enemies\E_Creature"));
                                 case Enemies_1x2.Goblin:
-                                    return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Goblin"));
+                                    return new BasicEnemy(position, 15, 40, 1500, content.Load<Texture2D>(@"Enemies\E_Goblin"));
 
                             }
                             break;
@@ -254,27 +254,27 @@ namespace World_Of_Rectangle.Game.Entities
                             switch ((Enemies_1x3)index)
                             {
                                 case Enemies_1x3.Skeletton:
-                                    return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Skeletton"));
+                                    return new BasicEnemy(position, 20, 55, 1500, content.Load<Texture2D>(@"Enemies\E_Skeletton"));
                                 case Enemies_1x3.Bandit:
-                                    return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Bandit"));
+                                    return new BasicEnemy(position, 20, 55, 1500, content.Load<Texture2D>(@"Enemies\E_Bandit"));
                                 case Enemies_1x3.DarkElve:
-                                    return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_DarkElve"));
+                                    return new BasicEnemy(position, 20, 55, 1500, content.Load<Texture2D>(@"Enemies\E_DarkElve"));
                                 case Enemies_1x3.DarkKnight:
-                                    return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_DarkKnight"));
+                                    return new BasicEnemy(position, 20, 55, 1500, content.Load<Texture2D>(@"Enemies\E_DarkKnight"));
                                 case Enemies_1x3.Elve:
-                                    return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Elve"));
+                                    return new BasicEnemy(position, 20, 55, 1500, content.Load<Texture2D>(@"Enemies\E_Elve"));
                                 case Enemies_1x3.Gnoll:
-                                    return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Gnoll"));
+                                    return new BasicEnemy(position, 20, 55, 1500, content.Load<Texture2D>(@"Enemies\E_Gnoll"));
                                 case Enemies_1x3.Hobgoblin:
-                                    return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Hobgoblin"));
+                                    return new BasicEnemy(position, 20, 55, 1500, content.Load<Texture2D>(@"Enemies\E_Hobgoblin"));
                                 case Enemies_1x3.Lich:
-                                    return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Lich"));
+                                    return new BasicEnemy(position, 20, 55, 1500, content.Load<Texture2D>(@"Enemies\E_Lich"));
                                 case Enemies_1x3.Orc:
-                                    return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Orc"));
+                                    return new BasicEnemy(position, 20, 55, 1500, content.Load<Texture2D>(@"Enemies\E_Orc"));
                                 case Enemies_1x3.Vampire:
-                                    return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Vampire"));
+                                    return new BasicEnemy(position, 20, 55, 1500, content.Load<Texture2D>(@"Enemies\E_Vampire"));
                                 case Enemies_1x3.Werewolf:
-                                    return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Werewolf"));
+                                    return new BasicEnemy(position, 20, 55, 1500, content.Load<Texture2D>(@"Enemies\E_Werewolf"));
                             }
                             break;
                         case 4:
@@ -292,7 +292,7 @@ namespace World_Of_Rectangle.Game.Entities
                             switch ((Enemies_2x2)index)
                             {
                                 case Enemies_2x2.Slime:
-                                    return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Slime"));
+                                    return new BasicEnemy(position, 20, 65, 1500, content.Load<Texture2D>(@"Enemies\E_Slime"));
                             }
                             break;
                         case 3:
@@ -300,23 +300,23 @@ namespace World_Of_Rectangle.Game.Entities
                             {
                                 //Zombie,Mummy,Ghul,Bear,Basilisk,Ghostwolf,Warg,Wolf,Zombiehound,
                                 case Enemies_2x3.Zombie:
-                                    return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Zombie"));
+                                    return new BasicEnemy(position, 25, 75, 1500, content.Load<Texture2D>(@"Enemies\E_Zombie"));
                                 case Enemies_2x3.Mummy:
-                                    return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Mummy"));
+                                    return new BasicEnemy(position, 25, 75, 1500, content.Load<Texture2D>(@"Enemies\E_Mummy"));
                                 case Enemies_2x3.Ghul:
-                                    return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Ghul"));
+                                    return new BasicEnemy(position, 25, 75, 1500, content.Load<Texture2D>(@"Enemies\E_Ghul"));
                                 case Enemies_2x3.Bear:
-                                    return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Bear"));
+                                    return new BasicEnemy(position, 25, 75, 1500, content.Load<Texture2D>(@"Enemies\E_Bear"));
                                 case Enemies_2x3.Basilisk:
-                                    return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Basilisk"));
+                                    return new BasicEnemy(position, 25, 75, 1500, content.Load<Texture2D>(@"Enemies\E_Basilisk"));
                                 case Enemies_2x3.Ghostwolf:
-                                    return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Warg"));
+                                    return new BasicEnemy(position, 25, 75, 1500, content.Load<Texture2D>(@"Enemies\E_Warg"));
                                 case Enemies_2x3.Warg:
-                                    return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Warg"));
+                                    return new BasicEnemy(position, 25, 75, 1500, content.Load<Texture2D>(@"Enemies\E_Warg"));
                                 case Enemies_2x3.Wolf:
-                                    return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Wolf"));
+                                    return new BasicEnemy(position, 25, 75, 1500, content.Load<Texture2D>(@"Enemies\E_Wolf"));
                                 case Enemies_2x3.Zombiehound:
-                                    return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Zombiehound"));
+                                    return new BasicEnemy(position, 25, 75, 1500, content.Load<Texture2D>(@"Enemies\E_Zombiehound"));
 
                             }
                             break;
@@ -341,7 +341,7 @@ namespace World_Of_Rectangle.Game.Entities
                             switch ((Enemies_3x4)index)
                             {
                                 case Enemies_3x4.Glitch:
-                                    return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Glitch"));
+                                    return new BasicEnemy(position, 25, float.PositiveInfinity, 1500, content.Load<Texture2D>(@"Enemies\E_Glitch"));
                             }
                             break;
                     }
@@ -353,7 +353,7 @@ namespace World_Of_Rectangle.Game.Entities
                             switch ((Enemies_4x4)index)
                             {
                                 case Enemies_4x4.Dragon_Skeletton:
-                                    return new BasicEnemy(position, 5, 10, 50, content.Load<Texture2D>(@"Enemies\E_Dragon_Skeletton"));
+                                    return new BasicEnemy(position, 40, 120, 1500, content.Load<Texture2D>(@"Enemies\E_Dragon_Skeletton"));
 
                             }
                             break;
