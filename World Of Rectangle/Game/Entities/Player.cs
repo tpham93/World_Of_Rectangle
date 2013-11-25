@@ -57,7 +57,7 @@ namespace World_Of_Rectangle.Game.Entities
         }
 
         public Player(Vector2 position, float rotation, Keys[] keys)
-            : base(position, rotation, false, 0, float.PositiveInfinity)
+            : base(position, rotation, false, 0, 100 )
         {
             if (keys.Length != (int)ActionKeys.KeyCount)
             {

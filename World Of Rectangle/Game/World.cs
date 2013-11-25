@@ -50,7 +50,7 @@ namespace World_Of_Rectangle.Game
         readonly static Color Horse_InvisibleColor = new Color(0, 80, 0);
         readonly static Color GateColor = new Color(0, 60, 0);
         readonly static Color BoxesColor = new Color(0, 40, 0);
-        
+
 
 
 
@@ -78,7 +78,7 @@ namespace World_Of_Rectangle.Game
 
             Vector2 startPoint = Vector2.Zero;
             Spawner.Initialize(content);
-            EntityManager.Initialize(new Point(map.Width / 10, map.Height / 5), new Point(map.Width, map.Height), Vector2.Zero);
+            EntityManager.Initialize(new Point(map.Width / 5, map.Height / 5), new Point(map.Width, map.Height), Vector2.Zero);
 
             for (int i = 0; i < pixel.Length; ++i)
             {
@@ -343,7 +343,7 @@ namespace World_Of_Rectangle.Game
             Spawner result = null;
             if (color.R == 250)
             {
-                result = new Spawner(0.01f,position,new Point[]{new Point(1,1)});
+                result = new Spawner(0.01f, position, new Point[] { new Point(1, 1) });
             }
             if (color.R == 230)
             {

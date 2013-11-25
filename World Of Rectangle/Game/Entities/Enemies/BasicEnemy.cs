@@ -39,7 +39,7 @@ namespace World_Of_Rectangle.Game.Entities.Enemies
             }
 
             moveVector.Normalize();
-            Position += moveVector * 2;
+            Position += moveVector * 4;
 
             base.Update(gameTime);
 
