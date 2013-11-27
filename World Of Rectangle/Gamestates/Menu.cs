@@ -36,7 +36,7 @@ namespace World_Of_Rectangle.Gamestates
 
         public Menu()
         {
-            buttonGamestates = new EGameStates[] { EGameStates.Intro, EGameStates.Menu, EGameStates.Close };
+            buttonGamestates = new EGameStates[] { EGameStates.Game, EGameStates.Menu, EGameStates.Close };
             buttonTextures = new Texture2D[buttonGamestates.Length];
             buttonRectangles = new Rectangle[buttonGamestates.Length];
             scaleValues = Global.scaleValues;

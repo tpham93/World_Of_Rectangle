@@ -86,6 +86,9 @@ namespace World_Of_Rectangle.Game.Entities
             }
         }
 
+        private static List<Vector2> bloodPositions;
+        private static Texture2D bloodTexture;
+
         private static List<IEntity> passableEntities;
         public static List<IEntity> PassableEntities
         {
@@ -123,6 +126,7 @@ namespace World_Of_Rectangle.Game.Entities
 
         public static void Initialize(Point chunkSize, Point mapSize, Vector2 startPosition)
         {
+            bloodPositions = new List<Vector2>();
             passableEntities = new List<IEntity>();
             solidEntities = new List<IEntity>();
             enemies = new List<IEntity>();
@@ -153,6 +157,7 @@ namespace World_Of_Rectangle.Game.Entities
         public static void LoadContent(ContentManager content)
         {
             player.LoadContent(content);
+            bloodTexture = content.Load<Texture2D>(@"Enemies\Blood");
         }
 
         public static void Update(GameTime gameTime)
@@ -199,7 +204,8 @@ namespace World_Of_Rectangle.Game.Entities
                         }
                     }
                 }
-                if (chunk.HasPlayer)
+
+                //if (chunk.HasPlayer)
                 {
                     for (int i = 0; i < chunkEnemies.Count; ++i)
                     {
@@ -285,6 +291,7 @@ namespace World_Of_Rectangle.Game.Entities
             }
             foreach (IEntity deadEnemy in deadEnemies)
             {
+                bloodPositions.Add(deadEnemy.Position);
                 enemies.Remove(deadEnemy);
             }
 
@@ -381,6 +388,10 @@ namespace World_Of_Rectangle.Game.Entities
             for (int i = 0; i < solidEntities.Count; ++i)
             {
                 solidEntities[i].Draw(gameTime, spriteBatch);
+            }
+            for (int i = 0; i < bloodPositions.Count; ++i)
+            {
+                spriteBatch.Draw(bloodTexture,bloodPositions[i], Color.White);
             }
         }
 
