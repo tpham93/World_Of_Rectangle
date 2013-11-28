@@ -92,6 +92,10 @@ namespace World_Of_Rectangle.Game.Entities
         {
             get { return hp > 0; }
         }
+        public bool canReceiveDamage
+        {
+            get { return invincibleTime <= TimeSpan.Zero; }
+        }
         public bool Moveable
         {
             get { return moveable; }

@@ -234,18 +234,28 @@ namespace World_Of_Rectangle.Game.Entities
                             {
                                 enemy1.Position -= intersectData.Mtv * intersectData.Distance / 2;
                                 player.Position += intersectData.Mtv * intersectData.Distance / 2;
-                                player.receiveDamageFrom(enemy1);
+                                if (player.canReceiveDamage)
+                                {
+                                    player.receiveDamageFrom(enemy1);
+                                }
                             }
                             if (player.isAttacking)
                             {
                                 intersectData = enemy1.Shape.intersects(player.Weapon.Shape);
                                 if (intersectData.Intersects)
                                 {
-                                    enemy1.receiveDamageFrom(player.Weapon);
-                                    if (!enemy1.stillLiving)
+                                    if (enemy1.canReceiveDamage)
                                     {
-                                        deadEnemies.Add(enemy1);
+                                        enemy1.receiveDamageFrom(player.Weapon);
+
+                                        if (!enemy1.stillLiving)
+                                        {
+                                            deadEnemies.Add(enemy1);
+                                        }
                                     }
+
+                                    bloodPositions.Add(enemy1.Position);
+                                    enemy1.Position -= intersectData.Mtv * intersectData.Distance;
                                 }
                             }
                         }
@@ -291,7 +301,6 @@ namespace World_Of_Rectangle.Game.Entities
             }
             foreach (IEntity deadEnemy in deadEnemies)
             {
-                bloodPositions.Add(deadEnemy.Position);
                 enemies.Remove(deadEnemy);
             }
 
@@ -391,7 +400,7 @@ namespace World_Of_Rectangle.Game.Entities
             }
             for (int i = 0; i < bloodPositions.Count; ++i)
             {
-                spriteBatch.Draw(bloodTexture,bloodPositions[i], Color.White);
+                spriteBatch.Draw(bloodTexture,bloodPositions[i], Color.White * 0.6f);
             }
         }
 
